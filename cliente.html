@@ -258,13 +258,13 @@ body {
 }
 
 .avaliar-content h1 {
-  color: #002b5b;
+  color: #004080;
   margin-bottom: 20px;
 }
 
 .avaliar-content label {
   font-weight: bold;
-  color: #002b5b;
+  color: #004080;
   margin-top: 15px;
   width: 100%;
   text-align: left;
@@ -376,6 +376,22 @@ body {
   font-size: 14px;
   line-height: 1.4;
 }
+.botao-sair {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: 004080;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%; /* Garantindo que o botão ocupe toda a largura disponível */
+  text-align: left; /* Alinha o texto do botão à esquerda */
+}
+
+.botao-sair:hover {
+  background-color: #ff6600;
+}
   </style>
 </head>
 <body>
@@ -391,7 +407,7 @@ body {
     <a href="#" onclick="mostrarTela('avaliar')">Avaliar Profissionais</a>
     <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
     <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
-    <a href="index.html">Sair</a>
+    <button class="botao-sair" onclick="confirmarSaida()">Sair</button>
   </div>
 
   <div class="main-content">
@@ -752,6 +768,13 @@ function enviarCancelamento() {
   document.getElementById('cancelamento-content').style.display = 'none';
   document.getElementById('inicio').style.display = 'block';  // Exemplo, volte para a tela inicial ou outra desejada
 }
+function confirmarSaida() {
+    const confirmacao = confirm("Tem certeza que deseja sair?");
+    if (confirmacao) {
+      // Redireciona para a tela de login ou página inicial
+      window.location.href = "index.html"; // Altere para o destino desejado
+    }
+  }
   </script>
 </body>
 </html>
