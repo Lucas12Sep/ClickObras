@@ -12,60 +12,52 @@
       height: 100vh;
     }
 
-    /* Barra lateral */
     .sidebar {
       width: 240px;
       background-color: #002b5b;
       color: white;
-      height: 100%;
+      height: 100vh;
       position: fixed;
       top: 0;
       left: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      padding-left: 0;
     }
 
-    .sidebar img {
+    .sidebar-logo {
+      background: white;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .sidebar-logo img {
       width: 160px;
-      margin-bottom: 20px;
-      display: block;
     }
 
     .sidebar h2 {
-      margin-bottom: 30px;
+      margin: 20px;
       font-size: 1.5rem;
     }
 
     .sidebar a {
-      width: 100%;
-      text-align: left;
       padding: 12px 20px;
-      text-decoration: none;
       color: white;
-      display: block;
+      text-decoration: none;
       transition: background 0.3s;
-      margin-bottom: 10px;
     }
 
     .sidebar a:hover {
       background-color: #ff6600;
     }
 
-    /* Conteúdo principal */
     .main-content {
       margin-left: 240px;
       padding: 20px;
       flex-grow: 1;
+      overflow-y: auto;
     }
 
-    .main-content h1 {
-      color: #002b5b;
-    }
-
-    /* Telas para navegação */
     .tela {
       display: none;
     }
@@ -73,68 +65,353 @@
     .tela.ativo {
       display: block;
     }
+
+    .servico-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background-color: #f9f9f9;
+    }
+
+    .servico-card h3 {
+      margin: 0 0 10px;
+      color: #002b5b;
+    }
+
+    .btn-aceitar {
+      background-color: #002b5b;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-aceitar:disabled {
+      background-color: #28a745;
+    }
+
+    .progresso-container {
+      background-color: #ddd;
+      border-radius: 20px;
+      height: 20px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progresso-barra {
+      height: 100%;
+      width: 0%;
+      background-color: #28a745;
+      text-align: center;
+      color: white;
+      font-size: 0.8rem;
+      transition: width 0.5s ease;
+    }
+
+    .status-label {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #002b5b;
+    }
+
+    .status-select {
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    #configuracoes.tela.ativo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 40px);
+}
+
+.configuracoes-content {
+  background: #f9f9f9;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
   </style>
 </head>
 <body>
-  <!-- Barra lateral com logo -->
   <div class="sidebar">
-    <img src="logo_clickobra_1 fundo branco.png" alt="Logo ClickObra" />
+    <div class="sidebar-logo">
+      <img src="logo_clickobra_1 fundo branco.png" alt="Logo ClickObra" />
+    </div>
     <h2>Parceiro</h2>
     <a href="#" onclick="mostrarTela('servicos-disponiveis')">Serviços Disponíveis</a>
     <a href="#" onclick="mostrarTela('servicos')">Serviços</a>
-    <a href="#" onclick="mostrarTela('notificacoes')">Notificações</a>
-    <a href="#" onclick="mostrarTela('perfil')">Gestão de Perfil</a>
+    <a href="#" onclick="mostrarTela('chat')">Chat</a>
+    <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
     <a href="#" onclick="mostrarTela('financeiro')">Financeiro</a>
-    <a href="#" onclick="mostrarTela('funcoes')">Funções Gerais</a>
+    <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
+    <a href="#" onclick="confirmarSaida()">Sair</a>
   </div>
 
-  <!-- Conteúdo principal -->
   <div class="main-content">
     <div id="servicos-disponiveis" class="tela ativo">
       <h1>Serviços Disponíveis</h1>
-      <p>Visualize os serviços disponíveis na sua região.</p>
-      <button><a href="#mapa-servicos">Ver no Mapa</a></button>
+      <p>Abaixo estão os serviços disponíveis para sua especialidade (Pintor):</p>
+
+      <div class="servico-card">
+        <h3>Pintura de apartamento com 150 metros</h3>
+        <p><strong>Local:</strong> Rua das Flores, 123</p>
+        <p><strong>Data:</strong> 03/05/2025</p>
+        <p><strong>Entrega até:</strong> 03/06/2025</p>
+        <p><strong>Valor:</strong> R$ 12.500,00 (com material)</p>
+        <button class="btn-aceitar">Aceitar Serviço</button>
+      </div>
+
+      <div class="servico-card">
+        <h3>Pintura de Fachada</h3>
+        <p><strong>Local:</strong> Av. Brasil, 987</p>
+        <p><strong>Data:</strong> 15/05/2025</p>
+        <p><strong>Entrega até:</strong> 25/05/2025</p>
+        <p><strong>Valor:</strong> R$ 1.200,00 (sem material)</p>
+        <button class="btn-aceitar">Aceitar Serviço</button>
+      </div>
+
+      <div class="servico-card">
+        <h3>Retoque em Portas</h3>
+        <p><strong>Local:</strong> Rua Verde, 45</p>
+        <p><strong>Data:</strong> 12/05/2025</p>
+        <p><strong>Entrega até:</strong> 14/05/2025</p>
+        <p><strong>Valor:</strong> R$ 250,00 (sem material)</p>
+        <button class="btn-aceitar">Aceitar Serviço</button>
+      </div>
     </div>
 
     <div id="servicos" class="tela">
-      <h1>Serviços</h1>
+      <h1>Serviços Aceitos</h1>
       <p>Gerencie os serviços em andamento, finalizados ou cancelados.</p>
-      <button><a href="#servicos-em-andamento">Ver Serviços</a></button>
+      <div id="servicos-aceitos"></div>
     </div>
 
-    <div id="notificacoes" class="tela">
-      <h1>Notificações</h1>
-      <p>Novas Solicitações: 2</p>
-      <p><a href="#notificacoes">Ver Notificações</a></p>
+    <div id="chat" class="tela">
+      <h1>Chat com Nova Riviera Imobiliária</h1>
+      <div id="chat-container" style="height: 300px; overflow-y: auto; background: #f5f5f5; padding: 20px; border-radius: 10px;">
+        <div style="align-self: flex-end; background: #002b5b; color: white; padding: 10px 15px; border-radius: 20px;">Olá, posso começar amanhã pela manhã.</div>
+        <div style="align-self: flex-start; background: #e0e0e0; padding: 10px 15px; border-radius: 20px;">Ótimo, estarei disponível às 8h.</div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <input id="mensagemInput" type="text" placeholder="Digite sua mensagem..." style="flex-grow: 1; border-radius: 20px; padding: 10px;" />
+        <button onclick="enviarMensagem()" style="background: #002b5b; color: white; padding: 10px 20px; border-radius: 20px;">Enviar</button>
+      </div>
     </div>
 
     <div id="perfil" class="tela">
-      <h1>Gestão de Perfil</h1>
-      <p>Atualize seu perfil, foto, descrição e especialidades.</p>
-      <button><a href="#editar-perfil">Editar Perfil</a></button>
+      <h1>Meu Perfil</h1>
+      <div style="display: flex; gap: 20px; align-items: center;">
+        <img src="Foto José.jpeg" alt="João da Silva" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #002b5b;">
+        <div>
+          <h2>João da Silva</h2>
+          <p><strong>Especialidade:</strong> Pintor</p>
+          <p><strong>Serviços:</strong> 58</p>
+          <p><strong>Avaliação:</strong> ★ ★ ★ ★ ☆ (4.0)</p>
+        </div>
+      </div>
+      <h3>Sobre João</h3>
+      <p>Mais de 12 anos de experiência com acabamento, pontualidade e excelência. Atua no ClickObra desde 2024.</p>
     </div>
 
-    <div id="financeiro" class="tela">
-      <h1>Financeiro</h1>
-      <p>Pagamentos Pendentes: R$ 2.000,00</p>
-      <p><a href="#historico-pagamentos">Ver Histórico de Pagamentos</a></p>
-      <p>Faturamento Atual: R$ 5.500,00</p>
-    </div>
+    <!-- Financeiro -->
+<div id="financeiro" class="tela">
+  <h1 style="color: #002b5b;">Painel Financeiro</h1>
 
-    <div id="funcoes" class="tela">
-      <h1>Funções Gerais</h1>
-      <button><a href="#LGPD-e-termos-de-condições-e-uso">Termos de condições e uso</a></button>
-      <button><a href="#ajustes-gerais">Ajustes Gerais</a></button>
+  <!-- Resumo -->
+  <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+    <div style="flex: 1; background: #f0f8ff; padding: 20px; border-radius: 10px;">
+      <h3 style="margin: 0; color: #002b5b;">Ganhos Totais</h3>
+      <p style="font-size: 1.5rem; color: #28a745;">R$ 25.300,00</p>
+    </div>
+    <div style="flex: 1; background: #fff5e6; padding: 20px; border-radius: 10px;">
+      <h3 style="margin: 0; color: #002b5b;">Pagamentos Pendentes</h3>
+      <p style="font-size: 1.5rem; color: #ff6600;">R$ 0,00</p>
+    </div>
+    <div style="flex: 1; background: #e6ffe6; padding: 20px; border-radius: 10px;">
+      <h3 style="margin: 0; color: #002b5b;">Próximo Pagamento</h3>
+      <p style="font-size: 1.2rem;">25/05/2025 - R$ 1.200,00</p>
     </div>
   </div>
 
+  <!-- Histórico de pagamentos -->
+  <h2 style="color: #002b5b;">Histórico de Pagamentos</h2>
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+    <thead style="background: #002b5b; color: white;">
+      <tr>
+        <th style="padding: 10px;">Data</th>
+        <th>Serviço</th>
+        <th>Valor</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background: #f9f9f9;">
+        <td style="padding: 10px;">01/04/2025</td>
+        <td>Pintura Residencial</td>
+        <td>R$ 3.000,00</td>
+        <td style="color: green;">Pago</td>
+      </tr>
+      <tr style="background: #fff;">
+        <td style="padding: 10px;">15/03/2025</td>
+        <td>Retoque de Fachada</td>
+        <td>R$ 2.200,00</td>
+        <td style="color: green;">Pago</td>
+      </tr>
+      <tr style="background: #f9f9f9;">
+        <td style="padding: 10px;">20/02/2025</td>
+        <td>Pintura de Escritório</td>
+        <td>R$ 5.000,00</td>
+        <td style="color: green;">Pago</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Serviços pendentes -->
+  <h2 style="color: #002b5b;">Serviços a Pagar</h2>
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead style="background: #002b5b; color: white;">
+      <tr>
+        <th style="padding: 10px;">Data Prevista</th>
+        <th>Serviço</th>
+        <th>Valor</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background: #fffbe6;">
+        <td style="padding: 10px;">25/05/2025</td>
+        <td>Pintura de Fachada</td>
+        <td>R$ 1.200,00</td>
+        <td style="color: #ff9900;">Agendado</td>
+      </tr>
+      <tr style="background: #fff;">
+        <td style="padding: 10px;">03/06/2025</td>
+        <td>Pintura de Apartamento</td>
+        <td>R$ 12.500,00</td>
+        <td style="color: #ff9900;">Agendado</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Configurações Gerais -->
+<div id="configuracoes" class="tela">
+  <div class="configuracoes-content">
+    <h1>Configurações Gerais</h1>
+  <div class="form-group">
+    <label for="email-notificacoes">Notificações por E‑mail</label>
+    <select id="email-notificacoes">
+      <option value="ativado">Ativado</option>
+      <option value="desativado">Desativado</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="tema">Tema do Sistema</label>
+    <select id="tema">
+      <option value="claro">Claro</option>
+      <option value="escuro">Escuro</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="idioma">Idioma</label>
+    <select id="idioma">
+      <option value="pt">Português</option>
+      <option value="en">Inglês</option>
+      <option value="es">Espanhol</option>
+    </select>
+  </div>
+  <div class="form-group terms">
+    <div class="form-group terms" style="display: flex; align-items: center; font-size: 14px; line-height: 1.4;">
+      <label for="termos" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="checkbox" id="termos" style="margin: 0;" />
+        <span>Concordo com os <a href="link-para-termos.html" target="_blank" style="color: #007bff; text-decoration: none;">Termos de Uso</a> e Políticas do App</span>
+      </label>
+    </div>
+  </div>
+  <button onclick="salvarConfiguracoes()">Salvar Configurações</button>
+</div>
+</div>
+
   <script>
-    // Função para alternar as telas
-    function mostrarTela(tela) {
-      const telas = document.querySelectorAll('.tela');
-      telas.forEach(t => t.classList.remove('ativo'));
-      document.getElementById(tela).classList.add('ativo');
+    function mostrarTela(telaId) {
+      document.querySelectorAll('.tela').forEach(el => el.classList.remove('ativo'));
+      document.getElementById(telaId).classList.add('ativo');
+    }
+
+    function confirmarSaida() {
+      if (confirm("Deseja sair?")) {
+        window.location.href = "index.html";
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.btn-aceitar').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.servico-card');
+          btn.textContent = 'Serviço Aceito';
+          btn.disabled = true;
+
+          const clone = card.cloneNode(true);
+          clone.querySelector('.btn-aceitar').remove();
+
+          const label = document.createElement('label');
+          label.className = 'status-label';
+          label.textContent = 'Status da Obra:';
+
+          const select = document.createElement('select');
+          select.className = 'status-select';
+          select.innerHTML = `
+            <option value="0">Não Iniciada</option>
+            <option value="25">Iniciada</option>
+            <option value="50">Em Andamento</option>
+            <option value="100">Concluída</option>`;
+
+          const progresso = document.createElement('div');
+          progresso.className = 'progresso-container';
+          const barra = document.createElement('div');
+          barra.className = 'progresso-barra';
+          barra.textContent = '0%';
+          progresso.appendChild(barra);
+
+          select.addEventListener('change', () => {
+            barra.style.width = select.value + '%';
+            barra.textContent = select.value + '%';
+          });
+
+          clone.appendChild(label);
+          clone.appendChild(select);
+          clone.appendChild(progresso);
+          document.getElementById('servicos-aceitos').appendChild(clone);
+          card.remove();
+        });
+      });
+    });
+
+    function enviarMensagem() {
+      const input = document.getElementById('mensagemInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+      const chat = document.getElementById('chat-container');
+      const msgDiv = document.createElement('div');
+      msgDiv.textContent = msg;
+      msgDiv.style.cssText = 'align-self: flex-end; background: #002b5b; color: white; padding: 10px 15px; border-radius: 20px;';
+      chat.appendChild(msgDiv);
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
     }
   </script>
 </body>
 </html>
+

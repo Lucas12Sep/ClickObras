@@ -2,81 +2,756 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>Painel Parceiro</title>
+  <title>Painel Cliente</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      height: 100vh;
-    }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  height: 100vh;
+}
 
-    /* Painel Lateral */
-    .sidebar {
-      width: 240px;
-      background-color: #002b5b;
-      color: white;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      padding-top: 20px;
-      padding-left: 20px;
-    }
+.sidebar {
+  width: 240px;
+  background-color: #002b5b;
+  color: white;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
 
-    .sidebar h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 1.5rem;
-    }
+.sidebar .logo-area {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .sidebar a {
-      padding: 12px 20px;
-      text-decoration: none;
-      color: white;
-      display: block;
-      transition: background 0.3s;
-      margin-bottom: 10px;
-    }
+.sidebar .logo-area img {
+  max-width: 160px;
+  height: auto;
+}
 
-    .sidebar a:hover {
-      background-color: #ff6600;
-    }
+.sidebar h2 {
+  text-align: center;
+  margin: 20px 0 10px 0;
+  font-size: 1.5rem;
+}
 
-    /* Conteúdo principal */
-    .main-content {
-      margin-left: 240px; /* Deixa espaço para o painel */
-      padding: 20px;
-      flex-grow: 1; /* Faz o conteúdo principal preencher o espaço restante */
-    }
+.sidebar a {
+  padding: 12px 20px;
+  text-decoration: none;
+  color: white;
+  display: block;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
 
-    .main-content h1 {
-      color: #002b5b;
-    }
+.sidebar a:hover {
+  background-color: #ff6600;
+}
+
+#main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* altura total da tela */
+}
+
+.inicio-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.buscar-content,
+.acompanhar-content,
+.chat-content {
+  display: none;
+  flex-direction: column;
+  max-width: 800px;
+  width: 100%;
+}
+
+.inicio-content.active,
+.buscar-content.active,
+.acompanhar-content.active,
+.chat-content.active {
+  display: flex;
+}
+
+.inicio-content .text {
+  max-width: 50%;
+  padding: 20px;
+  text-align: left;
+}
+
+.inicio-content h1,
+.buscar-content h1,
+.acompanhar-content h1,
+.chat-content h1 {
+  color: #002b5b;
+  margin-bottom: 10px;
+}
+
+.inicio-content img {
+  width: 90%;
+  height: auto;
+  max-height: 100vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.buscar-content label,
+.acompanhar-content label {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #002b5b;
+}
+
+.buscar-content select,
+.buscar-content input[type="file"],
+.buscar-content textarea {
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.buscar-content button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+#info-profissional {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.foto-profissional {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #002b5b;
+}
+
+.btn-aceitar {
+  margin-top: 15px;
+  background-color: #002b5b;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+.btn-aceitar:hover {
+  background-color: #004080;
+}
+
+/* Chat styles */
+.chat-content #chat-box {
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 300px;
+  background-color: #f5f5f5;
+  margin-bottom: 15px;
+}
+
+.chat-content .mensagem {
+  max-width: 60%;
+  margin: 8px 0;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.mensagem.profissional {
+  background-color: #e0e0e0;
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.mensagem.cliente {
+  background-color: #002b5b;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input-container input {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.chat-input-container button {
+  padding: 10px 20px;
+  background-color: #002b5b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .inicio-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inicio-content img {
+    width: 90%;
+    max-height: 60vh;
+  }
+
+  .inicio-content .text {
+    text-align: center;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+}
+
+/* Estilo da tela Avaliar Profissionais */
+.avaliar-content {
+  display: none;
+  position: absolute;      /* centralização absoluta */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.avaliar-content.active {
+  display: flex;
+}
+
+.avaliar-content h1 {
+  color: #002b5b;
+  margin-bottom: 20px;
+}
+
+.avaliar-content label {
+  font-weight: bold;
+  color: #002b5b;
+  margin-top: 15px;
+  width: 100%;
+  text-align: left;
+  max-width: 500px;
+}
+
+.avaliar-content textarea,
+.avaliar-content select {
+  margin-top: 5px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.avaliar-content button {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  background-color: #002b5b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.avaliar-content button:hover {
+  background-color: #004080;
+}
+
+.perfil-content {
+  display: none;
+}
+
+.perfil-content.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px); /* desconta altura do cabeçalho, se houver */
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #002b5b;
+  margin-bottom: 20px;
+}
+.configuracoes-content {
+  display: flex;
+  flex-direction: column;  /* Coloca os elementos na vertical */
+  align-items: center; /* Alinha os itens à esquerda */
+  justify-content: center;
+  gap: 15px; /* Espaço entre os elementos */
+  width: 100%;
+  padding: 20px;
+}
+
+.configuracoes-content label {
+  font-weight: bold;
+  color: #002b5b;
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.configuracoes-content input,
+.configuracoes-content select,
+.configuracoes-content textarea {
+  margin-top: 5px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px; /* Limita a largura */
+  box-sizing: border-box;
+}
+
+.configuracoes-content button {
+  padding: 12px;
+  background-color: #002b5b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px; /* Limita a largura */
+}
+
+.configuracoes-content button:hover {
+  background-color: #004080;
+}
+.form-group.terms {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
   </style>
 </head>
 <body>
-  <!-- Painel Lateral -->
   <div class="sidebar">
+    <div class="logo-area">
+      <img src="logo_clickobra_1 fundo branco.png" alt="Logo ClickObra" />
+    </div>
     <h2>ClickObra</h2>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#buscar">Buscar Profissionais</a>
-    <a href="#servicos">Acompanhar Serviços</a>
-    <a href="#chat">Chat</a>
-    <a href="#orcamentos">Solicitar Orçamentos</a>
-    <a href="#avaliacoes">Avaliar Profissionais</a>
-    <a href="#perfil">Perfil</a>
+    <a href="#" onclick="mostrarTela('inicio')">Início</a>
+    <a href="#" onclick="mostrarTela('buscar')">Buscar Profissionais</a>
+    <a href="#" onclick="mostrarTela('acompanhar')">Acompanhar Serviços</a>
+    <a href="#" onclick="mostrarTela('chat')">Chat</a>
+    <a href="#" onclick="mostrarTela('avaliar')">Avaliar Profissionais</a>
+    <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
+    <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
     <a href="index.html">Sair</a>
   </div>
 
-  <!-- Conteúdo Principal -->
   <div class="main-content">
-    <h1>Bem-vindo!</h1>
-    <p>Escolha uma das opções no menu para começar.</p>
-    <!-- Aqui entrarão as seções dinâmicas -->
+    <!-- Início -->
+    <div class="inicio-content" id="inicio">
+      <div class="text">
+        <h1>Bem-vindo!</h1>
+        <p>Escolha uma das opções no menu para começar.</p>
+      </div>
+      <img src="ClickObra - Facilitando Reformas alterada.png" alt="Infográfico ClickObra" />
+    </div>
+
+    <!-- Buscar Profissionais -->
+    <div class="buscar-content" id="buscar">
+      <h1>Buscar Profissionais</h1>
+      <label for="tipo-servico">Qual serviço você precisa?</label>
+      <select id="tipo-servico">
+        <option value="">Selecione</option>
+        <option value="engenheiro">Engenheiro</option>
+        <option value="eletricista">Eletricista</option>
+        <option value="encanador">Encanador</option>
+        <option value="pedreiro">Pedreiro</option>
+        <option value="pintor">Pintor</option>
+        <option value="marceneiro">Marceneiro</option>
+        <option value="outro">Outro</option>
+      </select>
+
+      <label for="descricao">Descreva sua necessidade:</label>
+      <textarea id="descricao" rows="4" placeholder="Detalhe o que você precisa..."></textarea>
+
+      <label for="fotos">Anexar Fotos (opcional):</label>
+      <input type="file" id="fotos" accept="image/*" multiple />
+
+      <button onclick="enviarSolicitacao()">Enviar Solicitação</button>
+
+      <div id="info-profissional" style="display: none;">
+        <h2>Profissional Sugerido</h2>
+        <img src="Foto José.jpeg" alt="Foto do Profissional" class="foto-profissional" />
+        <p><strong>Nome:</strong> João da Silva</p>
+        <p><strong>Especialidade:</strong> Pintor</p>
+        <p><strong>Experiência:</strong> 12 anos. Atua desde 2024 no ClickObra</p>
+        <p><strong>Avaliação:</strong> ⭐⭐⭐⭐☆</p>
+        <p><strong>Descrição:</strong> Profissional experiente em pintura residencial e predial.</p>
+        <p><strong>Valor Total:</strong> R$ 22.500,00</p>
+        <button class="btn-aceitar" onclick="aceitarServico()">Aceitar Serviço</button>
+        <div id="botoes-acoes" style="display: none; margin-top: 20px;">
+          <button onclick="mostrarTela('acompanhar')">Ir para Acompanhar Serviços</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tela de Pagamento -->
+<div class="pagamento-content" id="pagamento" style="display: none; flex-direction: column; align-items: center; padding: 30px;">
+  <h1>Pagamento</h1>
+  <p><strong>Profissional:</strong> João da Silva</p>
+  <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
+  <p><strong>Valor:</strong> R$ 22.500,00</p>
+
+  <label for="numero-cartao">Número do Cartão:</label>
+  <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000" maxlength="19" />
+
+  <label for="validade-cartao">Validade:</label>
+  <input type="text" id="validade-cartao" placeholder="MM/AA" maxlength="5" />
+
+  <label for="cvv-cartao">CVV:</label>
+  <input type="text" id="cvv-cartao" placeholder="123" maxlength="3" />
+
+  <button class="btn-aceitar" onclick="processarPagamento()">Pagar</button>
+  
+  <p id="mensagem-pagamento" style="display:none; color: green; font-weight: bold; margin-top: 20px;">
+    Pagamento realizado com sucesso!
+  </p>
+</div>
+
+<!-- Acompanhar Serviços -->
+<div class="acompanhar-content" id="acompanhar">
+  <h1>Acompanhamento da Obra</h1>
+  <p><strong>Profissional:</strong> João da Silva</p>
+  <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
+  <p><strong>Status:</strong> Iniciada</p>
+  <p><strong>Previsão de entrega:</strong> 03/06/2025</p>
+  <p><strong>Valor:</strong> R$ 22.500,00</p>
+  <p><strong>Contato:</strong> (11) 99999-9999</p>
+
+  <div style="margin-top: 20px;">
+    <label style="font-weight: bold; color: #002b5b;">Progresso da Obra:</label>
+    <div style="background-color: #ddd; border-radius: 25px; overflow: hidden; height: 25px; margin-top: 10px;">
+      <div style="height: 100%; width: 25%; background-color: #ff6600; color: white; text-align: center; line-height: 25px;">
+        25%
+      </div>
+    </div>
   </div>
+
+  <div style="margin-top: 30px;">
+    <label style="font-weight: bold; color: #002b5b;">Etapas:</label>
+    <ul style="list-style: none; padding-left: 10px; margin-top: 10px;">
+      <li>✔️ Planejamento concluído</li>
+      <li>🔄 Compra de materiais realizada</li>
+      <li>🔲 Execução em andamento</li>
+      <li>🔲 Revisão e finalização pendente</li>
+    </ul>
+  </div>
+
+  <!-- Botão para abrir a tela de cancelamento -->
+  <button onclick="mostrarTelaCancelamento()" style="background-color: #ff3333; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 30px;">
+    Cancelar Serviço
+  </button>
+</div>
+
+<!-- Tela de Cancelamento (oculta inicialmente) -->
+<div id="cancelamento-content" style="display: none; padding: 30px; background-color: #f2f2f2; border-radius: 10px; max-width: 600px; margin: 20px auto; text-align: center;">
+  <h2>Cancelar Serviço</h2>
+  <p><strong>Profissional:</strong> João da Silva</p>
+  <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
+  
+  <label for="motivo-cancelamento" style="font-weight: bold;">Escolha o motivo do cancelamento:</label>
+  <select id="motivo-cancelamento" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; max-width: 500px; margin-top: 10px;">
+    <option value="">Selecione</option>
+    <option value="problemas_pessoais">Problemas pessoais</option>
+    <option value="problema_com_profissional">Problema com o profissional</option>
+    <option value="atrasp">Atraso</option>
+    <option value="mudanca_de_necessidade">Mudança de necessidade</option>
+    <option value="outro">Outro</option>
+  </select>
+  
+  <label for="mensagem-suporte" style="font-weight: bold; margin-top: 15px;">Mensagem para o suporte:</label>
+  <textarea id="mensagem-suporte" rows="4" placeholder="Deixe uma mensagem para o suporte..."></textarea>
+
+  <button onclick="enviarCancelamento()" style="background-color: #ff3333; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
+    Enviar Cancelamento
+  </button>
+</div>
+
+    <!-- Chat -->
+    <div class="chat-content" id="chat">
+      <h1>Chat com João da Silva</h1>
+      <div id="chat-box">
+        <div class="mensagem profissional">Olá, posso começar amanhã pela manhã.</div>
+        <div class="mensagem cliente">Ótimo, estarei disponível às 8h.</div>
+      </div>
+      <div class="chat-input-container">
+        <input id="mensagem" type="text" placeholder="Digite sua mensagem..." />
+        <button onclick="enviarMensagem()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Avaliar Profissionais -->
+  <div class="avaliar-content" id="avaliar" style="display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+  <h1>Avaliar Profissional</h1>
+  <p><strong>Profissional:</strong> João da Silva</p>
+  <label for="estrelas">Nota (1 a 5 estrelas):</label>
+  <select id="estrelas">
+    <option value="">Selecione</option>
+    <option value="1">⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
+  </select>
+
+  <label for="comentario">Comentário:</label>
+  <textarea id="comentario" rows="4" placeholder="Deixe seu feedback..."></textarea>
+
+  <button id="btnAvaliacao" onclick="enviarAvaliacao()">Enviar Avaliação</button>
+<p id="avalia-msg" style="display: none; color: #006400; margin-top: 15px; font-weight: bold;">
+  Avaliação enviada!
+</p>
+</div>
+
+<!-- Meu Perfil -->
+<div class="perfil-content" id="perfil" style="display: none; flex-direction: column; align-items: center;">
+  <h1>Meu Perfil</h1>
+  <img src="WhatsApp Image 2025-05-03 at 17.40.41.jpeg" alt="Foto do Cliente" class="foto-perfil" />
+  <p><strong>Nome:</strong> Nova Riviera Empreendimentos Imobiliários S/C Ltda</p>
+  <p><strong>Endereço Base:</strong> R. José de Albuquerque Medeiros, 352 - Água Fria, São Paulo, SP</p>
+  <p><strong>Número de Serviços Prestados:</strong> 8</p>
+  <p><strong>Telefone:</strong> (11) 2991-2266</p>
+  <p><strong>Email:</strong> novariviera.imobiliaria@email.com</p>
+</div>
+
+<!-- Configurações Gerais -->
+<div id="configuracoes" class="configuracoes-content">
+  <h1>Configurações Gerais</h1>
+  <div class="form-group">
+    <label for="email-notificacoes">Notificações por E‑mail</label>
+    <select id="email-notificacoes">
+      <option value="ativado">Ativado</option>
+      <option value="desativado">Desativado</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="tema">Tema do Sistema</label>
+    <select id="tema">
+      <option value="claro">Claro</option>
+      <option value="escuro">Escuro</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="idioma">Idioma</label>
+    <select id="idioma">
+      <option value="pt">Português</option>
+      <option value="en">Inglês</option>
+      <option value="es">Espanhol</option>
+    </select>
+  </div>
+  <div class="form-group terms">
+    <div class="form-group terms" style="display: flex; align-items: center; font-size: 14px; line-height: 1.4;">
+      <label for="termos" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="checkbox" id="termos" style="margin: 0;" />
+        <span>Concordo com os <a href="link-para-termos.html" target="_blank" style="color: #007bff; text-decoration: none;">Termos de Uso</a> e Políticas do App</span>
+      </label>
+    </div>
+  </div>
+  <button onclick="salvarConfiguracoes()">Salvar Configurações</button>
+</div>
+</div>
+  <script>
+    function mostrarTela(tela) {
+      const telas = ['inicio','buscar','acompanhar','chat','avaliar','perfil','configuracoes'];
+      telas.forEach(id => {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+          elemento.classList.remove('active');
+          elemento.style.display = 'none';
+        }
+      });
+      const atual = document.getElementById(tela);
+      if (atual) {
+        atual.classList.add('active');
+        atual.style.display = 'flex';
+      }
+    }
+
+    function enviarSolicitacao() {
+      alert("Solicitação enviada com sucesso!");
+      document.getElementById("info-profissional").style.display = "block";
+    }
+
+    function aceitarServico() {
+      alert("Serviço aceito com João da Silva!");
+      document.getElementById("botoes-acoes").style.display = "block";
+    }
+
+    function enviarMensagem() {
+      const input = document.getElementById("mensagem");
+      const texto = input.value.trim();
+      const chatBox = document.getElementById("chat-box");
+      function enviarAvaliacao() {
+  const estrelas = document.getElementById("estrelas").value;
+  const comentario = document.getElementById("comentario").value.trim();
+
+  if (!estrelas || !comentario) {
+    alert("Por favor, selecione uma nota e escreva um comentário.");
+    return;
+  }
+
+  alert("Avaliação enviada com sucesso!");
+  document.getElementById("estrelas").value = "";
+  document.getElementById("comentario").value = "";
+}
+
+      if (texto !== "") {
+        const novaMsg = document.createElement("div");
+        novaMsg.className = "mensagem cliente";
+        novaMsg.textContent = texto;
+        chatBox.appendChild(novaMsg);
+        input.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+
+    window.onload = () => {
+      mostrarTela("inicio");
+    };
+    function enviarAvaliacao() {
+  const estrelas = document.getElementById("estrelas").value;
+  const comentario = document.getElementById("comentario").value.trim();
+  const msg = document.getElementById("avalia-msg");
+  const btn = document.getElementById("btnAvaliacao");  // Captura o botão "Enviar Avaliação"
+
+  if (!estrelas || !comentario) {
+    alert("Por favor, selecione uma nota e escreva um comentário.");
+    return;
+  }
+
+  // Exibe a mensagem de avaliação enviada
+  msg.style.display = "block";
+
+  // Desabilita o botão para não permitir o envio novamente
+  btn.disabled = true;
+
+  // Limpa o formulário de avaliação
+  document.getElementById("estrelas").value = "";
+  document.getElementById("comentario").value = "";
+}
+function salvarConfiguracoes() {
+  const termos = document.getElementById('termos').checked;
+
+  if (!termos) {
+    alert('Você precisa concordar com os Termos de Uso e Políticas para continuar.');
+    return;
+  }
+
+  // Se chegou aqui, está tudo ok
+  alert('Configurações salvas com sucesso!');
+}
+function aceitarServico() {
+  document.getElementById('info-profissional').style.display = 'none';
+  mostrarTela('pagamento');
+}
+
+function processarPagamento() {
+  // Simulação do pagamento
+  document.getElementById('mensagem-pagamento').style.display = 'block';
+
+  // Opcional: ir para acompanhamento após alguns segundos
+  setTimeout(() => {
+    mostrarTela('acompanhar');
+    document.getElementById('mensagem-pagamento').style.display = 'none';
+  }, 3000);
+}
+
+function mostrarTela(tela) {
+  const seções = document.querySelectorAll('.inicio-content, .buscar-content, .acompanhar-content, .chat-content, .avaliar-content, .perfil-content, .configuracoes-content, .pagamento-content');
+  seções.forEach(secao => secao.style.display = 'none');
+
+  const ativa = document.getElementById(tela);
+  if (ativa) ativa.style.display = 'flex';
+}
+// Função para exibir a tela de cancelamento
+function mostrarTelaCancelamento() {
+  // Oculta a tela atual (Acompanhar Serviços)
+  document.getElementById('acompanhar').style.display = 'none';
+
+  // Exibe a tela de cancelamento
+  document.getElementById('cancelamento-content').style.display = 'block';
+}
+
+// Função para enviar o cancelamento (aqui você pode incluir o envio de dados para um servidor ou outra lógica)
+function enviarCancelamento() {
+  const motivo = document.getElementById('motivo-cancelamento').value;
+  const mensagem = document.getElementById('mensagem-suporte').value;
+
+  if (!motivo) {
+    alert("Por favor, selecione um motivo para o cancelamento.");
+    return;
+  }
+
+  // Aqui você pode adicionar lógica para salvar ou enviar os dados do cancelamento
+  console.log("Cancelamento enviado com motivo:", motivo);
+  console.log("Mensagem para suporte:", mensagem);
+
+  // Redirecionar ou mostrar uma mensagem de sucesso
+  alert("Cancelamento enviado com sucesso! O suporte entrará em contato.");
+  
+  // Voltar para a tela inicial ou outra tela
+  document.getElementById('cancelamento-content').style.display = 'none';
+  document.getElementById('inicio').style.display = 'block';  // Exemplo, volte para a tela inicial ou outra desejada
+}
+  </script>
 </body>
 </html>
