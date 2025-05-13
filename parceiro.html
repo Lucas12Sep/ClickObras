@@ -88,6 +88,16 @@
       cursor: pointer;
     }
 
+    .btn-contraproposta {
+  background-color: #002b5b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
     .btn-aceitar:disabled {
       background-color: #28a745;
     }
@@ -170,7 +180,15 @@
         <p><strong>Data:</strong> 03/05/2025</p>
         <p><strong>Entrega até:</strong> 03/06/2025</p>
         <p><strong>Valor:</strong> R$ 12.500,00 (com material)</p>
+        <p><strong>Dias Disponíveis:</strong> Segunda a Sábado</p>
+        <p><strong>Horário Disponível:</strong> 08:00 às 18:00</p>
         <button class="btn-aceitar">Aceitar Serviço</button>
+        <button class="btn-contraproposta">Fazer Contraproposta</button>
+<div class="contraproposta-form" style="display:none; margin-top:10px;">
+  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+  <input type="date" class="input-prazo" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+  <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
+</div>
       </div>
 
       <div class="servico-card">
@@ -179,7 +197,14 @@
         <p><strong>Data:</strong> 15/05/2025</p>
         <p><strong>Entrega até:</strong> 25/05/2025</p>
         <p><strong>Valor:</strong> R$ 1.200,00 (sem material)</p>
+        <p><strong>Dias Disponíveis:</strong> Segunda a quinta</p>
+        <p><strong>Horário Disponível:</strong> 08:00 às 17:00</p>
         <button class="btn-aceitar">Aceitar Serviço</button>
+        <button class="btn-contraproposta">Fazer Contraproposta</button>
+<div class="contraproposta-form" style="display:none; margin-top:10px;">
+  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" />
+  <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
+</div>
       </div>
 
       <div class="servico-card">
@@ -188,7 +213,14 @@
         <p><strong>Data:</strong> 12/05/2025</p>
         <p><strong>Entrega até:</strong> 14/05/2025</p>
         <p><strong>Valor:</strong> R$ 250,00 (sem material)</p>
+        <p><strong>Dias Disponíveis:</strong> Segunda a Sábado</p>
+        <p><strong>Horário Disponível:</strong> 08:00 às 20:00</p>
         <button class="btn-aceitar">Aceitar Serviço</button>
+        <button class="btn-contraproposta">Fazer Contraproposta</button>
+<div class="contraproposta-form" style="display:none; margin-top:10px;">
+  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" />
+  <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
+</div>
       </div>
     </div>
 
@@ -345,73 +377,158 @@
 </div>
 
   <script>
-    function mostrarTela(telaId) {
-      document.querySelectorAll('.tela').forEach(el => el.classList.remove('ativo'));
-      document.getElementById(telaId).classList.add('ativo');
+  function mostrarTela(telaId) {
+    document.querySelectorAll('.tela').forEach(el => el.classList.remove('ativo'));
+    document.getElementById(telaId).classList.add('ativo');
+  }
+
+  function confirmarSaida() {
+    if (confirm("Deseja sair?")) {
+      window.location.href = "index.html";
     }
+  }
 
-    function confirmarSaida() {
-      if (confirm("Deseja sair?")) {
-        window.location.href = "index.html";
-      }
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Ações ao clicar em "Aceitar Serviço"
+    document.querySelectorAll('.btn-aceitar').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.servico-card');
+        btn.textContent = 'Serviço Aceito';
+        btn.disabled = true;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.btn-aceitar').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const card = btn.closest('.servico-card');
-          btn.textContent = 'Serviço Aceito';
-          btn.disabled = true;
+        // Remover botão de contraproposta, se existir
+        const btnContraproposta = card.querySelector('.btn-contraproposta');
+        if (btnContraproposta) {
+          btnContraproposta.remove();
+        }
 
-          const clone = card.cloneNode(true);
-          clone.querySelector('.btn-aceitar').remove();
+        // Remover formulário de contraproposta, se existir
+        const formContraproposta = card.querySelector('.form-contraproposta');
+        if (formContraproposta) {
+          formContraproposta.remove();
+        }
 
-          const label = document.createElement('label');
-          label.className = 'status-label';
-          label.textContent = 'Status da Obra:';
+        const clone = card.cloneNode(true);
+        clone.querySelector('.btn-aceitar')?.remove();
 
-          const select = document.createElement('select');
-          select.className = 'status-select';
-          select.innerHTML = `
-            <option value="0">Não Iniciada</option>
-            <option value="25">Iniciada</option>
-            <option value="50">Em Andamento</option>
-            <option value="100">Concluída</option>`;
+        const label = document.createElement('label');
+        label.className = 'status-label';
+        label.textContent = 'Status da Obra:';
 
-          const progresso = document.createElement('div');
-          progresso.className = 'progresso-container';
-          const barra = document.createElement('div');
-          barra.className = 'progresso-barra';
-          barra.textContent = '0%';
-          progresso.appendChild(barra);
+        const select = document.createElement('select');
+        select.className = 'status-select';
+        select.innerHTML = `
+          <option value="0">Não Iniciada</option>
+          <option value="25">Iniciada</option>
+          <option value="50">Em Andamento</option>
+          <option value="100">Concluída</option>`;
 
-          select.addEventListener('change', () => {
-            barra.style.width = select.value + '%';
-            barra.textContent = select.value + '%';
-          });
+                const progresso = document.createElement('div');
+        progresso.className = 'progresso-container';
+        const barra = document.createElement('div');
+        barra.className = 'progresso-barra';
+        barra.textContent = '0%';
+        progresso.appendChild(barra);
 
-          clone.appendChild(label);
-          clone.appendChild(select);
-          clone.appendChild(progresso);
-          document.getElementById('servicos-aceitos').appendChild(clone);
-          card.remove();
+        // STATUS DE PRAZO
+        const statusPrazo = document.createElement('p');
+        statusPrazo.style.marginTop = '10px';
+        statusPrazo.style.fontWeight = 'bold';
+
+        // Buscar data de entrega
+        const textoEntrega = card.querySelector('p:nth-of-type(3)').textContent; // "Entrega até: 03/06/2025"
+        const dataEntrega = new Date(textoEntrega.split('Entrega até:')[1].trim().split('/').reverse().join('-'));
+        const hoje = new Date();
+
+        function atualizarStatusPrazo(progressoAtual) {
+          const prazoExpirado = hoje > dataEntrega;
+
+          if (progressoAtual === '100') {
+            if (prazoExpirado) {
+              statusPrazo.textContent = 'Concluído (com atraso)';
+              statusPrazo.style.color = 'red';
+            } else {
+              statusPrazo.textContent = 'Concluído (adiantado)';
+              statusPrazo.style.color = 'green';
+            }
+          } else {
+            if (prazoExpirado) {
+              statusPrazo.textContent = 'Atrasado';
+              statusPrazo.style.color = 'red';
+            } else {
+              statusPrazo.textContent = 'Dentro do prazo';
+              statusPrazo.style.color = 'orange';
+            }
+          }
+        }
+
+        atualizarStatusPrazo('0'); // status inicial
+
+        select.addEventListener('change', () => {
+          barra.style.width = select.value + '%';
+          barra.textContent = select.value + '%';
+          atualizarStatusPrazo(select.value);
         });
+
+        clone.appendChild(label);
+        clone.appendChild(select);
+        clone.appendChild(progresso);
+        clone.appendChild(statusPrazo);
+
+
+        select.addEventListener('change', () => {
+          barra.style.width = select.value + '%';
+          barra.textContent = select.value + '%';
+        });
+
+        clone.appendChild(label);
+        clone.appendChild(select);
+        clone.appendChild(progresso);
+        document.getElementById('servicos-aceitos').appendChild(clone);
+        card.remove();
       });
     });
 
-    function enviarMensagem() {
-      const input = document.getElementById('mensagemInput');
-      const msg = input.value.trim();
-      if (!msg) return;
-      const chat = document.getElementById('chat-container');
-      const msgDiv = document.createElement('div');
-      msgDiv.textContent = msg;
-      msgDiv.style.cssText = 'align-self: flex-end; background: #002b5b; color: white; padding: 10px 15px; border-radius: 20px;';
-      chat.appendChild(msgDiv);
-      input.value = '';
-      chat.scrollTop = chat.scrollHeight;
-    }
-  </script>
+    // Alternar exibição do formulário de contraproposta
+    document.querySelectorAll('.btn-contraproposta').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const form = btn.nextElementSibling;
+        if (form && form.className.includes('contraproposta-form')) {
+          form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+      });
+    });
+
+    // Enviar contraproposta
+    document.querySelectorAll('.btn-enviar-proposta').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = btn.previousElementSibling;
+        const valor = input.value;
+        if (valor && !isNaN(valor)) {
+          alert(`Contraproposta enviada: R$ ${parseFloat(valor).toFixed(2)}`);
+          input.disabled = true;
+          btn.disabled = true;
+        } else {
+          alert("Digite um valor válido.");
+        }
+      });
+    });
+  });
+
+  // Envio de mensagem no chat
+  function enviarMensagem() {
+    const input = document.getElementById('mensagemInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+    const chat = document.getElementById('chat-container');
+    const msgDiv = document.createElement('div');
+    msgDiv.textContent = msg;
+    msgDiv.style.cssText = 'align-self: flex-end; background: #002b5b; color: white; padding: 10px 15px; border-radius: 20px;';
+    chat.appendChild(msgDiv);
+    input.value = '';
+    chat.scrollTop = chat.scrollHeight;
+  }
+</script>
 </body>
 </html>
 

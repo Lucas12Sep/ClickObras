@@ -392,6 +392,52 @@ body {
 .botao-sair:hover {
   background-color: #ff6600;
 }
+.disponibilidade-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.disponibilidade-content select,
+.disponibilidade-content input[type="time"],
+.disponibilidade-content button {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+  .hist-pagamentos-content {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .pagamento-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-left: 5px solid #4CAF50;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: 0.3s;
+  }
+
+  .pagamento-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .pagamento-item p {
+    margin: 6px 0;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
   </style>
 </head>
 <body>
@@ -401,10 +447,11 @@ body {
     </div>
     <h2>ClickObra</h2>
     <a href="#" onclick="mostrarTela('inicio')">Início</a>
-    <a href="#" onclick="mostrarTela('buscar')">Buscar Profissionais</a>
+    <a href="#" onclick="mostrarTela('buscar')">Buscar Serviço</a>
     <a href="#" onclick="mostrarTela('acompanhar')">Acompanhar Serviços</a>
     <a href="#" onclick="mostrarTela('chat')">Chat</a>
     <a href="#" onclick="mostrarTela('avaliar')">Avaliar Profissionais</a>
+    <a href="#" onclick="mostrarTela('hist-pagamentos')">Histórico de Pagamentos</a>
     <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
     <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
     <button class="botao-sair" onclick="confirmarSaida()">Sair</button>
@@ -420,9 +467,9 @@ body {
       <img src="ClickObra - Facilitando Reformas alterada.png" alt="Infográfico ClickObra" />
     </div>
 
-    <!-- Buscar Profissionais -->
+    <!-- Buscar Serviço -->
     <div class="buscar-content" id="buscar">
-      <h1>Buscar Profissionais</h1>
+      <h1>Buscar Serviço</h1>
       <label for="tipo-servico">Qual serviço você precisa?</label>
       <select id="tipo-servico">
         <option value="">Selecione</option>
@@ -440,6 +487,7 @@ body {
 
       <label for="fotos">Anexar Fotos (opcional):</label>
       <input type="file" id="fotos" accept="image/*" multiple />
+      
 
       <button onclick="enviarSolicitacao()">Enviar Solicitação</button>
 
@@ -459,24 +507,68 @@ body {
       </div>
     </div>
 
-    <!-- Tela de Pagamento -->
+    <!-- Disponibilidade de Atendimento -->
+<div class="disponibilidade-content" id="disponibilidade" style="display: none;">
+  <h1>Disponibilidade para Atendimento</h1>
+
+  <div id="dias-disponiveis-checkboxes">
+  <label>Selecione os dias disponíveis:</label><br>
+  <label><input type="checkbox" name="dias" value="segunda"> Segunda-feira</label><br>
+  <label><input type="checkbox" name="dias" value="terca"> Terça-feira</label><br>
+  <label><input type="checkbox" name="dias" value="quarta"> Quarta-feira</label><br>
+  <label><input type="checkbox" name="dias" value="quinta"> Quinta-feira</label><br>
+  <label><input type="checkbox" name="dias" value="sexta"> Sexta-feira</label><br>
+  <label><input type="checkbox" name="dias" value="sabado"> Sábado</label><br>
+  <label><input type="checkbox" name="dias" value="domingo"> Domingo</label>
+</div>
+
+  <label for="hora-inicio">Horário de início:</label>
+  <input type="time" id="hora-inicio">
+
+  <label for="hora-fim">Horário de término:</label>
+  <input type="time" id="hora-fim">
+
+  <button onclick="confirmarDisponibilidade()">Confirmar Disponibilidade</button>
+</div>
+
+<!-- Tela de Pagamento -->
 <div class="pagamento-content" id="pagamento" style="display: none; flex-direction: column; align-items: center; padding: 30px;">
   <h1>Pagamento</h1>
   <p><strong>Profissional:</strong> João da Silva</p>
   <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
   <p><strong>Valor:</strong> R$ 22.500,00</p>
 
-  <label for="numero-cartao">Número do Cartão:</label>
-  <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000" maxlength="19" />
+  <!-- Escolha do método -->
+  <label for="metodo-pagamento">Escolha o método de pagamento:</label>
+  <select id="metodo-pagamento" onchange="mostrarFormularioPagamento()" style="margin-bottom: 20px;">
+    <option value="">Selecione</option>
+    <option value="cartao">Cartão de Crédito</option>
+    <option value="pix">Pix</option>
+  </select>
 
-  <label for="validade-cartao">Validade:</label>
-  <input type="text" id="validade-cartao" placeholder="MM/AA" maxlength="5" />
+  <!-- Formulário Cartão -->
+  <div id="form-cartao" style="display: none; width: 100%; max-width: 500px;">
+    <label for="numero-cartao">Número do Cartão:</label>
+    <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000" maxlength="19" />
 
-  <label for="cvv-cartao">CVV:</label>
-  <input type="text" id="cvv-cartao" placeholder="123" maxlength="3" />
+    <label for="validade-cartao">Validade:</label>
+    <input type="text" id="validade-cartao" placeholder="MM/AA" maxlength="5" />
 
+    <label for="cvv-cartao">CVV:</label>
+    <input type="text" id="cvv-cartao" placeholder="123" maxlength="3" />
+  </div>
+
+  <!-- Formulário Pix -->
+  <div id="form-pix" style="display: none; width: 100%; max-width: 500px; text-align: center;">
+    <p>Use o QR Code abaixo para efetuar o pagamento:</p>
+    <img src="qrcode-pix-exemplo.png" alt="QR Code Pix" style="width: 200px; margin: 20px auto;" />
+    <p>Ou copie a chave Pix:</p>
+    <p style="font-weight: bold;">pix@clickobra.com</p>
+  </div>
+
+  <!-- Botão de pagamento -->
   <button class="btn-aceitar" onclick="processarPagamento()">Pagar</button>
-  
+
   <p id="mensagem-pagamento" style="display:none; color: green; font-weight: bold; margin-top: 20px;">
     Pagamento realizado com sucesso!
   </p>
@@ -494,10 +586,23 @@ body {
 
   <div style="margin-top: 20px;">
     <label style="font-weight: bold; color: #002b5b;">Progresso da Obra:</label>
+    <div style="margin-top: 30px;">
+  <label style="font-weight: bold; color: #002b5b;">Estimativa Desejada:</label>
+  <div style="background-color: #eee; border-radius: 25px; overflow: hidden; height: 20px; margin-top: 10px;">
+    <div style="height: 100%; width: 25%; background-color: #007bff; color: white; text-align: center; line-height: 20px;">
+      25%
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <p><strong>Status do Andamento:</strong> <span style="color: green;">No prazo</span></p>
+</div>
     <div style="background-color: #ddd; border-radius: 25px; overflow: hidden; height: 25px; margin-top: 10px;">
       <div style="height: 100%; width: 25%; background-color: #ff6600; color: white; text-align: center; line-height: 25px;">
         25%
       </div>
+      
     </div>
   </div>
 
@@ -512,32 +617,33 @@ body {
   </div>
 
   <!-- Botão para abrir a tela de cancelamento -->
-  <button onclick="mostrarTelaCancelamento()" style="background-color: #ff3333; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 30px;">
-    Cancelar Serviço
+  <button onclick="mostrarTelaCancelamento()" style="background-color: #002b5b; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 30px;">
+    Dúvidas ou Problemas? Clique Aqui
   </button>
 </div>
 
 <!-- Tela de Cancelamento (oculta inicialmente) -->
 <div id="cancelamento-content" style="display: none; padding: 30px; background-color: #f2f2f2; border-radius: 10px; max-width: 600px; margin: 20px auto; text-align: center;">
-  <h2>Cancelar Serviço</h2>
+  <h2>Contate o Suporte</h2>
   <p><strong>Profissional:</strong> João da Silva</p>
   <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
   
-  <label for="motivo-cancelamento" style="font-weight: bold;">Escolha o motivo do cancelamento:</label>
+  <label for="motivo-cancelamento" style="font-weight: bold;">Escolha o motivo do contato:</label>
   <select id="motivo-cancelamento" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; max-width: 500px; margin-top: 10px;">
     <option value="">Selecione</option>
-    <option value="problemas_pessoais">Problemas pessoais</option>
-    <option value="problema_com_profissional">Problema com o profissional</option>
-    <option value="atrasp">Atraso</option>
-    <option value="mudanca_de_necessidade">Mudança de necessidade</option>
-    <option value="outro">Outro</option>
+    <option value="problemas_pessoais">O profissional não compareceu</option>
+    <option value="problema_com_profissional">O serviço está atrasado</option>
+    <option value="atrasp">O serviço foi feito de forma insatisfatória</option>
+    <option value="mudanca_de_necessidade">Preciso reagendar o serviço</option>
+    <option value="outro">Desejo cancelar o serviço</option>
+    <option value="outro">Outro (descrever abaixo)</option>
   </select>
   
   <label for="mensagem-suporte" style="font-weight: bold; margin-top: 15px;">Mensagem para o suporte:</label>
   <textarea id="mensagem-suporte" rows="4" placeholder="Deixe uma mensagem para o suporte..."></textarea>
 
-  <button onclick="enviarCancelamento()" style="background-color: #ff3333; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
-    Enviar Cancelamento
+  <button onclick="enviarCancelamento()" style="background-color: #002b5b; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
+    Enviar Mensagem
   </button>
 </div>
 
@@ -576,6 +682,27 @@ body {
 <p id="avalia-msg" style="display: none; color: #006400; margin-top: 15px; font-weight: bold;">
   Avaliação enviada!
 </p>
+</div>
+
+<!-- Histórico de Pagamentos -->
+<div class="hist-pagamentos-content" id="hist-pagamentos" style="display: none; flex-direction: column; gap: 20px;">
+  <h2>Histórico de Pagamentos</h2>
+
+  <div class="pagamento-item">
+    <p><strong>Serviço:</strong> Pintura Residencial</p>
+    <p><strong>Profissional:</strong> João da Silva</p>
+    <p><strong>Data do Pagamento:</strong> 10/05/2025</p>
+    <p><strong>Forma de Pagamento:</strong> PIX</p>
+    <p><strong>Valor:</strong> R$ 22.500,00</p>
+  </div>
+
+  <div class="pagamento-item">
+    <p><strong>Serviço:</strong> Encanamento</p>
+    <p><strong>Profissional:</strong> Maria Oliveira</p>
+    <p><strong>Data do Pagamento:</strong> 02/04/2025</p>
+    <p><strong>Forma de Pagamento:</strong> Cartão de Crédito</p>
+    <p><strong>Valor:</strong> R$ 1.200,00</p>
+  </div>
 </div>
 
 <!-- Meu Perfil -->
@@ -627,25 +754,63 @@ body {
 </div>
   <script>
     function mostrarTela(tela) {
-      const telas = ['inicio','buscar','acompanhar','chat','avaliar','perfil','configuracoes'];
-      telas.forEach(id => {
-        const elemento = document.getElementById(id);
-        if (elemento) {
-          elemento.classList.remove('active');
-          elemento.style.display = 'none';
-        }
-      });
-      const atual = document.getElementById(tela);
-      if (atual) {
-        atual.classList.add('active');
-        atual.style.display = 'flex';
-      }
+  const telas = ['inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 'configuracoes', 'pagamento', 'disponibilidade', 'hist-pagamentos'];
+  telas.forEach(id => {
+    const elemento = document.getElementById(id);
+    if (elemento) {
+      elemento.classList.remove('active');
+      elemento.style.display = 'none';
     }
+  });
+  const atual = document.getElementById(tela);
+  if (atual) {
+    atual.classList.add('active');
+    atual.style.display = 'flex';
+  }
+}
 
     function enviarSolicitacao() {
-      alert("Solicitação enviada com sucesso!");
-      document.getElementById("info-profissional").style.display = "block";
+  // Valida os campos antes de avançar (opcional)
+  const tipoServico = document.getElementById("tipo-servico").value;
+  const descricao = document.getElementById("descricao").value.trim();
+
+  if (!tipoServico || !descricao) {
+    alert("Por favor, preencha o tipo de serviço e a descrição.");
+    return;
+  }
+
+  // Vai para a tela de disponibilidade
+  document.getElementById("buscar").style.display = "none";
+  document.getElementById("disponibilidade").style.display = "flex";
+}
+
+
+  function aceitarServico() {
+    // Aqui você pode adicionar lógica para confirmar a aceitação
+    alert("Serviço aceito! Você será redirecionado para Acompanhar Serviços.");
+    document.getElementById('botoes-acoes').style.display = 'block';
+  }
+
+function mostrarTela(tela) {
+  const telas = [
+    'inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 
+    'configuracoes', 'pagamento', 'disponibilidade', 'hist-pagamentos'
+  ];
+
+  telas.forEach(id => {
+    const elemento = document.getElementById(id);
+    if (elemento) {
+      // Remove qualquer estilo de exibição das outras telas
+      elemento.style.display = 'none';
     }
+  });
+
+  const ativa = document.getElementById(tela);
+  if (ativa) {
+    // Exibe a tela solicitada
+    ativa.style.display = 'flex';
+  }
+}
 
     function aceitarServico() {
       alert("Serviço aceito com João da Silva!");
@@ -775,6 +940,31 @@ function confirmarSaida() {
       window.location.href = "index.html"; // Altere para o destino desejado
     }
   }
+function mostrarFormularioPagamento() {
+  const metodo = document.getElementById("metodo-pagamento").value;
+  document.getElementById("form-cartao").style.display = metodo === "cartao" ? "block" : "none";
+  document.getElementById("form-pix").style.display = metodo === "pix" ? "block" : "none";
+}
+
+function confirmarDisponibilidade() {
+  const checkboxes = document.querySelectorAll('input[name="dias"]:checked');
+  const diasSelecionados = Array.from(checkboxes).map(cb => cb.value);
+  const inicio = document.getElementById("hora-inicio").value;
+  const fim = document.getElementById("hora-fim").value;
+
+  if (diasSelecionados.length === 0 || !inicio || !fim) {
+    alert("Por favor, selecione ao menos um dia e os horários.");
+    return;
+  }
+
+  console.log("Dias:", diasSelecionados);
+  console.log("Horário:", inicio + " - " + fim);
+
+  // Aqui você pode esconder essa tela e mostrar a próxima (ex: pagamento)
+  document.getElementById("disponibilidade").style.display = "none";
+  mostrarTela("pagamento");
+}
+
   </script>
 </body>
 </html>
