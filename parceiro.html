@@ -151,7 +151,11 @@
   flex-direction: column;
   gap: 20px;
 }
-
+#inicio.tela.ativo {
+  margin-left: 240px;
+  padding: 20px;
+  text-align: center;
+}
   </style>
 </head>
 <body>
@@ -160,6 +164,7 @@
       <img src="logo_clickobra_1 fundo branco.png" alt="Logo ClickObra" />
     </div>
     <h2>Parceiro</h2>
+    <a href="#" onclick="mostrarTela('inicio')">Início</a>
     <a href="#" onclick="mostrarTela('servicos-disponiveis')">Serviços Disponíveis</a>
     <a href="#" onclick="mostrarTela('servicos')">Serviços</a>
     <a href="#" onclick="mostrarTela('chat')">Chat</a>
@@ -169,43 +174,75 @@
     <a href="#" onclick="confirmarSaida()">Sair</a>
   </div>
 
+<!-- Início -->
+<div id="inicio" class="tela ativo">
+<div style="padding: 20px; text-align: center;">
+  <h1 style="color: #002b5b;">Bem-vindo de volta, João!</h1>
+  <p style="font-size: 1.2rem; color: #555;">Confira abaixo o seu painel de controle com os dados atualizados.</p>
+
+  <div style="margin-top: 30px;">
+    <img src="Dash Parceiro (1).png" alt="Dashboard" 
+     style="display: block; margin: 30px auto; max-width: 90%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" />
+
+  </div>
+</div>
+</div>
+
+  <!-- Serviços -->
   <div class="main-content">
-    <div id="servicos-disponiveis" class="tela ativo">
+    <div id="servicos-disponiveis" class="tela">
       <h1>Serviços Disponíveis</h1>
       <p>Abaixo estão os serviços disponíveis para sua especialidade (Pintor):</p>
 
       <div class="servico-card">
-        <h3>Pintura de apartamento com 150 metros</h3>
-        <p><strong>Local:</strong> Rua das Flores, 123</p>
-        <p><strong>Data:</strong> 03/05/2025</p>
-        <p><strong>Entrega até:</strong> 03/06/2025</p>
-        <p><strong>Valor:</strong> R$ 12.500,00 (com material)</p>
-        <p><strong>Dias Disponíveis:</strong> Segunda a Sábado</p>
-        <p><strong>Horário Disponível:</strong> 08:00 às 18:00</p>
-        <button class="btn-aceitar">Aceitar Serviço</button>
-        <button class="btn-contraproposta">Fazer Contraproposta</button>
-<div class="contraproposta-form" style="display:none; margin-top:10px;">
-  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
-  <input type="date" class="input-prazo" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
-  <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
+  <h3>Pintura de apartamento com 150 metros</h3>
+  <p><strong>Local:</strong> Rua das Flores, 123</p>
+  <p><strong>Data:</strong> 03/05/2025</p>
+  <p><strong>Entrega até:</strong> 03/06/2025</p>
+  <p><strong>Valor:</strong> R$ 12.500,00 (com material)</p>
+  <p><strong>Dias Disponíveis:</strong> Segunda a Sábado</p>
+  <p><strong>Horário Disponível:</strong> 08:00 às 18:00</p>
+  <button class="btn-aceitar">Aceitar Serviço</button>
+  <button class="btn-contraproposta">Fazer Contraproposta</button>
+
+  <div class="contraproposta-form" style="display:none; margin-top:10px;">
+    <!-- Frase explicativa adicionada -->
+    <p style="margin-bottom: 10px; font-weight: bold; color: #333;">
+      Qual sua contraproposta sobre o valor e a data de entrega?
+    </p>
+    
+    <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+    <input type="date" class="input-prazo" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+    <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+      Enviar
+    </button>
+  </div>
 </div>
-      </div>
 
       <div class="servico-card">
-        <h3>Pintura de Fachada</h3>
-        <p><strong>Local:</strong> Av. Brasil, 987</p>
-        <p><strong>Data:</strong> 15/05/2025</p>
-        <p><strong>Entrega até:</strong> 25/05/2025</p>
-        <p><strong>Valor:</strong> R$ 1.200,00 (sem material)</p>
-        <p><strong>Dias Disponíveis:</strong> Segunda a quinta</p>
-        <p><strong>Horário Disponível:</strong> 08:00 às 17:00</p>
-        <button class="btn-aceitar">Aceitar Serviço</button>
-        <button class="btn-contraproposta">Fazer Contraproposta</button>
-<div class="contraproposta-form" style="display:none; margin-top:10px;">
-  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" />
-  <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
+  <h3>Pintura de Fachada</h3>
+  <p><strong>Local:</strong> Av. Brasil, 987</p>
+  <p><strong>Data:</strong> 15/05/2025</p>
+  <p><strong>Entrega até:</strong> 25/05/2025</p>
+  <p><strong>Valor:</strong> R$ 1.200,00 (sem material)</p>
+  <p><strong>Dias Disponíveis:</strong> Segunda a quinta</p>
+  <p><strong>Horário Disponível:</strong> 08:00 às 17:00</p>
+  <button class="btn-aceitar">Aceitar Serviço</button>
+  <button class="btn-contraproposta">Fazer Contraproposta</button>
+
+  <div class="contraproposta-form" style="display:none; margin-top:10px;">
+    <!-- Frase explicativa adicionada -->
+    <p style="margin-bottom: 10px; font-weight: bold; color: #333;">
+      Qual sua contraproposta sobre o valor e a data de entrega?
+    </p>
+    
+    <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+    <input type="date" class="input-prazo" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+    <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+      Enviar
+    </button>
+  </div>
 </div>
-      </div>
 
       <div class="servico-card">
         <h3>Retoque em Portas</h3>
@@ -224,12 +261,14 @@
       </div>
     </div>
 
+    <!-- Serviços -->
     <div id="servicos" class="tela">
       <h1>Serviços Aceitos</h1>
       <p>Gerencie os serviços em andamento, finalizados ou cancelados.</p>
       <div id="servicos-aceitos"></div>
     </div>
 
+    <!-- Chat -->
     <div id="chat" class="tela">
       <h1>Chat com Nova Riviera Imobiliária</h1>
       <div id="chat-container" style="height: 300px; overflow-y: auto; background: #f5f5f5; padding: 20px; border-radius: 10px;">
@@ -242,6 +281,7 @@
       </div>
     </div>
 
+    <!-- Perfil -->
     <div id="perfil" class="tela">
       <h1>Meu Perfil</h1>
       <div style="display: flex; gap: 20px; align-items: center;">
@@ -412,8 +452,9 @@
         clone.querySelector('.btn-aceitar')?.remove();
 
         const label = document.createElement('label');
-        label.className = 'status-label';
-        label.textContent = 'Status da Obra:';
+label.className = 'status-label';
+label.textContent = 'Status da Obra:';
+label.style.marginTop = '40px';  // ⬅️ Aqui está o espaçamento extra adicionado
 
         const select = document.createElement('select');
         select.className = 'status-select';

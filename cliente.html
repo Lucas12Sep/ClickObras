@@ -65,11 +65,14 @@ body {
 
 .inicio-content {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  flex-direction: column; /* Deixa o texto e a imagem em coluna */
+  justify-content: center;
   align-items: center;
-  max-width: 800px;
-  width: 100%;
+  text-align: center;
+  max-width: 100%;
+  padding-left: 240px; /* espaço pro sidebar */
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .buscar-content,
@@ -89,9 +92,9 @@ body {
 }
 
 .inicio-content .text {
-  max-width: 50%;
+  max-width: 100%;
   padding: 20px;
-  text-align: left;
+  text-align: center;
 }
 
 .inicio-content h1,
@@ -103,10 +106,8 @@ body {
 }
 
 .inicio-content img {
-  width: 90%;
+  max-width: 70%;
   height: auto;
-  max-height: 100vh;
-  object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -407,7 +408,7 @@ body {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-  .hist-pagamentos-content {
+  .hist-servicos-content {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -451,7 +452,7 @@ body {
     <a href="#" onclick="mostrarTela('acompanhar')">Acompanhar Serviços</a>
     <a href="#" onclick="mostrarTela('chat')">Chat</a>
     <a href="#" onclick="mostrarTela('avaliar')">Avaliar Profissionais</a>
-    <a href="#" onclick="mostrarTela('hist-pagamentos')">Histórico de Pagamentos</a>
+    <a href="#" onclick="mostrarTela('hist-servicos')">Histórico de Serviços</a>
     <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
     <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
     <button class="botao-sair" onclick="confirmarSaida()">Sair</button>
@@ -460,12 +461,12 @@ body {
   <div class="main-content">
     <!-- Início -->
     <div class="inicio-content" id="inicio">
-      <div class="text">
-        <h1>Bem-vindo!</h1>
-        <p>Escolha uma das opções no menu para começar.</p>
-      </div>
-      <img src="ClickObra - Facilitando Reformas alterada.png" alt="Infográfico ClickObra" />
-    </div>
+  <div class="text">
+    <h1>Bem-vindo!</h1>
+    <p>Veja abaixo o seu painel com dados resumidos.</p>
+  </div>
+  <img src="Dash Cliente.png" alt="Infográfico ClickObra" />
+</div>
 
     <!-- Buscar Serviço -->
     <div class="buscar-content" id="buscar">
@@ -473,12 +474,12 @@ body {
       <label for="tipo-servico">Qual serviço você precisa?</label>
       <select id="tipo-servico">
         <option value="">Selecione</option>
-        <option value="engenheiro">Engenheiro</option>
-        <option value="eletricista">Eletricista</option>
-        <option value="encanador">Encanador</option>
-        <option value="pedreiro">Pedreiro</option>
-        <option value="pintor">Pintor</option>
-        <option value="marceneiro">Marceneiro</option>
+        <option value="engenheiro">Engenheiro - Laudos e Projetos Estruturais</option>
+        <option value="eletricista">Eletricista - Instalação Residencial e Manutenção de Painéis</option>
+        <option value="encanador">Encanador - Desentupimento e Instalação Hidráulica</option>
+        <option value="pedreiro">Pedreiro - Alvenaria e Assentamento de Piso</option>
+        <option value="pintor">Pintor - Pintura Interna e Textura e Grafiato</option>
+        <option value="marceneiro">Marceneiro - Móveis Planejados e Montagem de Móveis</option>
         <option value="outro">Outro</option>
       </select>
 
@@ -512,7 +513,7 @@ body {
   <h1>Disponibilidade para Atendimento</h1>
 
   <div id="dias-disponiveis-checkboxes">
-  <label>Selecione os dias disponíveis:</label><br>
+  <label>Selecione os dias disponíveis para o parceiro realizar o serviço:</label><br>
   <label><input type="checkbox" name="dias" value="segunda"> Segunda-feira</label><br>
   <label><input type="checkbox" name="dias" value="terca"> Terça-feira</label><br>
   <label><input type="checkbox" name="dias" value="quarta"> Quarta-feira</label><br>
@@ -561,9 +562,17 @@ body {
   <!-- Formulário Pix -->
   <div id="form-pix" style="display: none; width: 100%; max-width: 500px; text-align: center;">
     <p>Use o QR Code abaixo para efetuar o pagamento:</p>
-    <img src="qrcode-pix-exemplo.png" alt="QR Code Pix" style="width: 200px; margin: 20px auto;" />
+    <img src="QrCodePIX.jpeg" alt="QR Code Pix" style="width: 200px; margin: 20px auto;" />
     <p>Ou copie a chave Pix:</p>
     <p style="font-weight: bold;">pix@clickobra.com</p>
+  </div>
+
+  <!-- Bloco de suporte -->
+  <div class="suporte-pagamento" style="margin: 30px 0; text-align: center;">
+    <p><strong>❓ Está com dúvidas sobre como realizar o pagamento ou sobre o valor?</strong></p>
+    <p>Fale com nosso suporte:</p>
+    <p>E-mail: <a href="mailto:suporte@clickobra.com">suporte@clickobra.com</a></p>
+    <p>WhatsApp: <a href="https://wa.me/5500000000000" target="_blank">(11) 91234-5678</a></p>
   </div>
 
   <!-- Botão de pagamento -->
@@ -587,22 +596,22 @@ body {
   <div style="margin-top: 20px;">
     <label style="font-weight: bold; color: #002b5b;">Progresso da Obra:</label>
     <div style="margin-top: 30px;">
-  <label style="font-weight: bold; color: #002b5b;">Estimativa Desejada:</label>
-  <div style="background-color: #eee; border-radius: 25px; overflow: hidden; height: 20px; margin-top: 10px;">
-    <div style="height: 100%; width: 25%; background-color: #007bff; color: white; text-align: center; line-height: 20px;">
-      25%
+      <label style="font-weight: bold; color: #002b5b;">Estimativa Planejada:</label>
+      <div style="background-color: #eee; border-radius: 25px; overflow: hidden; height: 20px; margin-top: 10px;">
+        <div style="height: 100%; width: 25%; background-color: #007bff; color: white; text-align: center; line-height: 20px;">
+          25%
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div style="margin-top: 10px;">
-  <p><strong>Status do Andamento:</strong> <span style="color: green;">No prazo</span></p>
-</div>
+    <div style="margin-top: 10px;">
+      <p><strong>Status do Andamento:</strong> <span style="color: green;">No prazo</span></p>
+    </div>
+
     <div style="background-color: #ddd; border-radius: 25px; overflow: hidden; height: 25px; margin-top: 10px;">
       <div style="height: 100%; width: 25%; background-color: #ff6600; color: white; text-align: center; line-height: 25px;">
         25%
       </div>
-      
     </div>
   </div>
 
@@ -620,30 +629,69 @@ body {
   <button onclick="mostrarTelaCancelamento()" style="background-color: #002b5b; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 30px;">
     Dúvidas ou Problemas? Clique Aqui
   </button>
+
+  <!-- Botão para redirecionar para a tela de avaliação -->
+  <button onclick="mostrarTelaAvaliacao()" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
+    Avaliar o Serviço
+  </button>
 </div>
 
 <!-- Tela de Cancelamento (oculta inicialmente) -->
-<div id="cancelamento-content" style="display: none; padding: 30px; background-color: #f2f2f2; border-radius: 10px; max-width: 600px; margin: 20px auto; text-align: center;">
-  <h2>Contate o Suporte</h2>
+<div id="cancelamento-content" style="display: none; padding: 30px; background-color: #f2f2f2; border-radius: 10px; max-width: 600px; margin: 20px auto; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+  <h2 style="margin-bottom: 20px;">Contate o Suporte</h2>
+
+  <p><strong>Profissional:</strong> João da Silva</p>
+  <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
+
+  <!-- Container para alinhar título e campos -->
+  <div style="width: 100%; max-width: 500px; margin: 0 auto; text-align: left;">
+    <label for="motivo-cancelamento" style="font-weight: bold; display: block; margin-top: 20px;">
+      Escolha o motivo do contato:
+    </label>
+
+    <select id="motivo-cancelamento" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; margin-top: 10px;">
+      <option value="">Selecione</option>
+      <option value="problemas_pessoais">O profissional não compareceu</option>
+      <option value="problema_com_profissional">O serviço está atrasado</option>
+      <option value="atrasp">O serviço foi feito de forma insatisfatória</option>
+      <option value="mudanca_de_necessidade">Preciso reagendar o serviço</option>
+      <option value="outro_cancelamento">Desejo cancelar o serviço</option>
+      <option value="outro">Outro (descrever abaixo)</option>
+    </select>
+
+    <textarea id="mensagem-suporte" rows="4" placeholder="Deixe uma mensagem para o suporte..." style="width: 100%; padding: 10px; margin-top: 20px; border-radius: 8px; border: 1px solid #ccc; resize: vertical;"></textarea>
+  </div>
+
+  <button onclick="enviarCancelamento()" style="background-color: #002b5b; color: white; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px; font-weight: bold;">
+    Enviar Mensagem
+  </button>
+</div>
+
+<!-- Tela de Avaliação (oculta inicialmente) -->
+<div id="avaliacao-content" style="display: none; padding: 30px; background-color: #f2f2f2; border-radius: 10px; max-width: 600px; margin: 20px auto; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+  <h2 style="margin-bottom: 20px;">Avalie o Serviço</h2>
+  
   <p><strong>Profissional:</strong> João da Silva</p>
   <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
   
-  <label for="motivo-cancelamento" style="font-weight: bold;">Escolha o motivo do contato:</label>
-  <select id="motivo-cancelamento" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; max-width: 500px; margin-top: 10px;">
-    <option value="">Selecione</option>
-    <option value="problemas_pessoais">O profissional não compareceu</option>
-    <option value="problema_com_profissional">O serviço está atrasado</option>
-    <option value="atrasp">O serviço foi feito de forma insatisfatória</option>
-    <option value="mudanca_de_necessidade">Preciso reagendar o serviço</option>
-    <option value="outro">Desejo cancelar o serviço</option>
-    <option value="outro">Outro (descrever abaixo)</option>
-  </select>
+  <div style="margin-top: 20px;">
+    <label style="font-weight: bold;">Nota de 1 a 5:</label>
+    <div class="rating" style="display: inline-block; direction: rtl;">
+      <input type="radio" id="estrela5" name="nota" value="5"><label for="estrela5" title="5 estrelas">★</label>
+      <input type="radio" id="estrela4" name="nota" value="4"><label for="estrela4" title="4 estrelas">★</label>
+      <input type="radio" id="estrela3" name="nota" value="3"><label for="estrela3" title="3 estrelas">★</label>
+      <input type="radio" id="estrela2" name="nota" value="2"><label for="estrela2" title="2 estrelas">★</label>
+      <input type="radio" id="estrela1" name="nota" value="1"><label for="estrela1" title="1 estrela">★</label>
+    </div>
+  </div>
   
-  <label for="mensagem-suporte" style="font-weight: bold; margin-top: 15px;">Mensagem para o suporte:</label>
-  <textarea id="mensagem-suporte" rows="4" placeholder="Deixe uma mensagem para o suporte..."></textarea>
-
-  <button onclick="enviarCancelamento()" style="background-color: #002b5b; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
-    Enviar Mensagem
+  <div style="margin-top: 20px;">
+    <label for="comentarios" style="font-weight: bold;">Comentários:</label>
+    <textarea id="comentarios" rows="4" placeholder="Deixe seu comentário sobre o serviço..." style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea>
+  </div>
+  
+  <button onclick="enviarAvaliacao()" style="background-color: #002b5b; color: white; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px; font-weight: bold;">
+    Enviar Avaliação
   </button>
 </div>
 
@@ -665,14 +713,14 @@ body {
   <div class="avaliar-content" id="avaliar" style="display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
   <h1>Avaliar Profissional</h1>
   <p><strong>Profissional:</strong> João da Silva</p>
-  <label for="estrelas">Nota (1 a 5 estrelas):</label>
+  <label for="estrelas">Dê uma nota de 1 a 5:</label>
   <select id="estrelas">
-    <option value="">Selecione</option>
-    <option value="1">⭐</option>
-    <option value="2">⭐⭐</option>
-    <option value="3">⭐⭐⭐</option>
-    <option value="4">⭐⭐⭐⭐</option>
-    <option value="5">⭐⭐⭐⭐⭐</option>
+    <option value="">Selecione a nota</option>
+    <option value="1">1 - Péssimo</option>
+    <option value="2">2 - Ruim</option>
+    <option value="3">3 - Regular</option>
+    <option value="4">4 - Bom</option>
+    <option value="5">5 - Excelente</option>
   </select>
 
   <label for="comentario">Comentário:</label>
@@ -684,9 +732,9 @@ body {
 </p>
 </div>
 
-<!-- Histórico de Pagamentos -->
-<div class="hist-pagamentos-content" id="hist-pagamentos" style="display: none; flex-direction: column; gap: 20px;">
-  <h2>Histórico de Pagamentos</h2>
+<!-- Histórico de Serviços -->
+<div class="hist-servicos-content" id="hist-servicos" style="display: none; flex-direction: column; gap: 20px;">
+  <h2>Histórico de Serviços</h2>
 
   <div class="pagamento-item">
     <p><strong>Serviço:</strong> Pintura Residencial</p>
@@ -694,6 +742,11 @@ body {
     <p><strong>Data do Pagamento:</strong> 10/05/2025</p>
     <p><strong>Forma de Pagamento:</strong> PIX</p>
     <p><strong>Valor:</strong> R$ 22.500,00</p>
+
+    <!-- Botão de avaliação -->
+    <button onclick="mostrarTelaAvaliacao()" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px;">
+      Avaliar Serviço
+    </button>
   </div>
 
   <div class="pagamento-item">
@@ -702,6 +755,11 @@ body {
     <p><strong>Data do Pagamento:</strong> 02/04/2025</p>
     <p><strong>Forma de Pagamento:</strong> Cartão de Crédito</p>
     <p><strong>Valor:</strong> R$ 1.200,00</p>
+
+    <!-- Botão de avaliação -->
+    <button onclick="mostrarTelaAvaliacao()" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px;">
+      Avaliar Serviço
+    </button>
   </div>
 </div>
 
@@ -754,7 +812,7 @@ body {
 </div>
   <script>
     function mostrarTela(tela) {
-  const telas = ['inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 'configuracoes', 'pagamento', 'disponibilidade', 'hist-pagamentos'];
+  const telas = ['inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 'configuracoes', 'pagamento', 'disponibilidade', 'hist-servicos'];
   telas.forEach(id => {
     const elemento = document.getElementById(id);
     if (elemento) {
@@ -794,7 +852,7 @@ body {
 function mostrarTela(tela) {
   const telas = [
     'inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 
-    'configuracoes', 'pagamento', 'disponibilidade', 'hist-pagamentos'
+    'configuracoes', 'pagamento', 'disponibilidade', 'hist-servicos'
   ];
 
   telas.forEach(id => {
@@ -964,7 +1022,27 @@ function confirmarDisponibilidade() {
   document.getElementById("disponibilidade").style.display = "none";
   mostrarTela("pagamento");
 }
+// Função para mostrar a tela de avaliação
+function mostrarTelaAvaliacao() {
+  // Esconde a tela de acompanhamento
+  document.getElementById('acompanhar').style.display = 'none';
 
+  // Mostra a tela de avaliação
+  document.getElementById('avaliar').style.display = 'flex'; // usando flex para alinhamento conforme seu CSS
+}
+
+// Função para enviar a avaliação
+function enviarAvaliacao() {
+  const nota = document.getElementById('estrelas').value;
+  const comentario = document.getElementById('comentario').value;
+
+  if (nota && comentario) {
+    // Aqui você pode enviar os dados para o servidor ou processar de acordo com sua necessidade
+    document.getElementById('avalia-msg').style.display = 'block'; // Exibe a mensagem de sucesso
+  } else {
+    alert("Por favor, preencha a nota e o comentário.");
+  }
+}
   </script>
 </body>
 </html>
