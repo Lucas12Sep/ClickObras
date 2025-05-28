@@ -379,19 +379,25 @@ body {
 }
 .botao-sair {
   margin-top: 10px;
-  padding: 12px;
-  background-color: 004080;
+  padding: 10px 16px;
+  background-color: #002b5b;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  width: 100%; /* Garantindo que o botão ocupe toda a largura disponível */
-  text-align: left; /* Alinha o texto do botão à esquerda */
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s ease;
 }
 
 .botao-sair:hover {
   background-color: #ff6600;
+}
+
+.botao-sair:focus {
+  outline: 2px solid #ff6600;
+  outline-offset: 2px;
 }
 .disponibilidade-content {
   display: flex;
@@ -439,6 +445,156 @@ body {
     text-align: center;
     margin-bottom: 20px;
   }
+.img-dashboard {
+  max-width: 100%;
+  height: auto;
+  max-height: 800px; /* Aumente esse valor conforme necessário */
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.dashboard-content {
+  display: none;
+}
+
+.dashboard-content.active {
+  display: flex;
+  padding-left: 240px;
+  height: 100vh;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+  }
+
+  .tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .tooltip:hover::after {
+    opacity: 1;
+  }
+  .suporte-content {
+  display: none; /* inicialmente oculta */
+  flex-direction: column;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.suporte-content h2 {
+  color: #002b5b;
+  margin-bottom: 20px;
+}
+
+.suporte-content p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.suporte-content .form-container {
+  width: 100%;
+  max-width: 500px;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.suporte-content label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  color: #002b5b;
+}
+
+.suporte-content select,
+.suporte-content textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.suporte-content button {
+  background-color: #002b5b;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.suporte-content button:hover {
+  background-color: #002b5b;
+}
+  .btn-buscar {
+    background-color: #002b5b;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(255,102,0,0.4);
+    transition: background-color 0.3s;
+  }
+  .btn-buscar:hover {
+    background-color: #e65c00; /* tom mais escuro no hover */
+  }
+
+  .btn-perfil {
+    background-color: #002b5b;
+    color: white;
+    border: 2px solid #002b5b;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .btn-perfil:hover {
+    background-color: #e65c00; /* fundo azul escuro */
+    color: white; /* texto branco */
+  }
   </style>
 </head>
 <body>
@@ -447,81 +603,96 @@ body {
       <img src="logo_clickobra_1 fundo branco.png" alt="Logo ClickObra" />
     </div>
     <h2>ClickObra</h2>
-    <a href="#" onclick="mostrarTela('inicio')">Início</a>
-    <a href="#" onclick="mostrarTela('buscar')">Buscar Serviço</a>
-    <a href="#" onclick="mostrarTela('acompanhar')">Acompanhar Serviços</a>
-    <a href="#" onclick="mostrarTela('chat')">Chat</a>
-    <a href="#" onclick="mostrarTela('avaliar')">Avaliar Profissionais</a>
-    <a href="#" onclick="mostrarTela('hist-servicos')">Histórico de Serviços</a>
-    <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
-    <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
-    <button class="botao-sair" onclick="confirmarSaida()">Sair</button>
+    <a href="#" title="Tela Inicial" onclick="mostrarTela('inicio')">Início</a>
+<a href="#" title="Procure um serviço para contratar" onclick="mostrarTela('buscar')">Buscar Serviço</a>
+<a href="#" title="Veja o status dos seus serviços" onclick="mostrarTela('acompanhar')">Acompanhar Serviços</a>
+<a href="#" title="Converse com o profissional" onclick="mostrarTela('chat')">Chat</a>
+<a href="#" title="Avalie os profissionais que contratou" onclick="mostrarTela('avaliar')">Avaliar Profissionais</a>
+<a href="#" title="Veja o histórico dos seus serviços" onclick="mostrarTela('hist-servicos')">Histórico de Serviços</a>
+<a href="#" title="Acesse e edite seus dados" onclick="mostrarTela('perfil')">Meu Perfil</a>
+<a href="#" title="Veja as estatísticas e relatórios" onclick="mostrarTela('dashboard')">Dashboard</a>
+<a href="#" title="Configure suas preferências" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
+<button class="botao-sair" title="Sair do seu perfil" onclick="confirmarSaida()">Sair</button>
   </div>
 
   <div class="main-content">
-    <!-- Início -->
-    <div class="inicio-content" id="inicio">
-  <div class="text">
-    <h1>Bem-vindo!</h1>
-    <p>Veja abaixo o seu painel com dados resumidos.</p>
-  </div>
-  <img src="Dash Cliente.png" alt="Infográfico ClickObra" />
+
+  <!-- Início -->
+<div class="inicio-content" id="inicio" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 240px; height: 100vh; box-sizing: border-box; background: #f0f4f8; color: #002b5b;">
+  <h1 style="font-size: 2.8rem; margin-bottom: 10px; font-weight: 700;">Bem-vindo ao ClickObra</h1>
+  <p style="font-size: 1.25rem; max-width: 480px; text-align: center; margin-bottom: 40px; line-height: 1.5;">
+    Conectamos você aos melhores profissionais da construção civil para realizar sua obra com segurança, qualidade e agilidade.
+  </p>
+  
+  <div style="display: flex; gap: 20px;">
+  <button onclick="mostrarTela('buscar')" class="btn-buscar">
+    Buscar Serviço
+  </button>
+
+  <button onclick="mostrarTela('perfil')" class="btn-perfil">
+    Meu Perfil
+  </button>
 </div>
 
-    <!-- Buscar Serviço -->
-    <div class="buscar-content" id="buscar">
-      <h1>Buscar Serviço</h1>
-      <label for="tipo-servico">Qual serviço você precisa?</label>
-      <select id="tipo-servico">
-        <option value="">Selecione</option>
-        <option value="engenheiro">Engenheiro - Laudos e Projetos Estruturais</option>
-        <option value="eletricista">Eletricista - Instalação Residencial e Manutenção de Painéis</option>
-        <option value="encanador">Encanador - Desentupimento e Instalação Hidráulica</option>
-        <option value="pedreiro">Pedreiro - Alvenaria e Assentamento de Piso</option>
-        <option value="pintor">Pintor - Pintura Interna e Textura e Grafiato</option>
-        <option value="marceneiro">Marceneiro - Móveis Planejados e Montagem de Móveis</option>
-        <option value="outro">Outro</option>
-      </select>
+  <small style="margin-top: 60px; color: #555; font-size: 0.9rem;">
+    © 2025 ClickObra - Todos os direitos reservados.
+  </small>
+</div>
 
-      <label for="descricao">Descreva sua necessidade:</label>
-      <textarea id="descricao" rows="4" placeholder="Detalhe o que você precisa..."></textarea>
+<!-- Buscar Serviço -->
+<div class="buscar-content" id="buscar">
+  <h1>Buscar Serviço</h1>
+  <label for="tipo-servico">Busque um serviço para receber um orçamento</label>
+  <select id="tipo-servico">
+    <option value="">Selecione</option>
+    <option value="engenheiro">Engenheiro - Laudos e Projetos Estruturais</option>
+    <option value="eletricista">Eletricista - Instalação Residencial e Manutenção de Painéis</option>
+    <option value="encanador">Encanador - Desentupimento e Instalação Hidráulica</option>
+    <option value="pedreiro">Pedreiro - Alvenaria e Assentamento de Piso</option>
+    <option value="pintor">Pintor - Pintura Interna e Textura e Grafiato</option>
+    <option value="marceneiro">Marceneiro - Móveis Planejados e Montagem de Móveis</option>
+    <option value="outro">Outro</option>
+  </select>
 
-      <label for="fotos">Anexar Fotos (opcional):</label>
-      <input type="file" id="fotos" accept="image/*" multiple />
-      
+  <label for="descricao">Descreva sua necessidade:</label>
+  <textarea id="descricao" rows="4" placeholder="Detalhe o que você precisa..."></textarea>
 
-      <button onclick="enviarSolicitacao()">Enviar Solicitação</button>
+  <label for="documentos" title="Adicione fotos do local, projeto, plantas e/ou documentos relevantes.">Anexar Documentos (opcional):</label>
+<input type="file" id="documentos" accept="image/*" multiple />
 
-      <div id="info-profissional" style="display: none;">
-        <h2>Profissional Sugerido</h2>
-        <img src="Foto José.jpeg" alt="Foto do Profissional" class="foto-profissional" />
-        <p><strong>Nome:</strong> João da Silva</p>
-        <p><strong>Especialidade:</strong> Pintor</p>
-        <p><strong>Experiência:</strong> 12 anos. Atua desde 2024 no ClickObra</p>
-        <p><strong>Avaliação:</strong> ⭐⭐⭐⭐☆</p>
-        <p><strong>Descrição:</strong> Profissional experiente em pintura residencial e predial.</p>
-        <p><strong>Valor Total:</strong> R$ 22.500,00</p>
-        <button class="btn-aceitar" onclick="aceitarServico()">Aceitar Serviço</button>
-        <div id="botoes-acoes" style="display: none; margin-top: 20px;">
-          <button onclick="mostrarTela('acompanhar')">Ir para Acompanhar Serviços</button>
-        </div>
-      </div>
+  <button onclick="enviarSolicitacao()" title="Clique para enviar sua solicitação de serviço">Enviar Solicitação</button>
+
+
+  <div id="info-profissional" style="display: none;">
+    <h2>Profissional Sugerido</h2>
+    <img src="Foto José.jpeg" alt="Foto do Profissional" class="foto-profissional" />
+    <p><strong>Nome:</strong> João da Silva</p>
+    <p><strong>Especialidade:</strong> Pintor</p>
+    <p><strong>Experiência:</strong> 12 anos. Atua desde 2024 no ClickObra</p>
+    <p><strong>Avaliação:</strong> ⭐⭐⭐⭐☆</p>
+    <p><strong>Descrição:</strong> Profissional experiente em pintura residencial e predial.</p>
+    <p><strong>Valor Total:</strong> R$ 22.500,00</p>
+    <button class="btn-aceitar" onclick="aceitarServico()" title="Aceite o serviço para iniciar o atendimento">Aceitar Serviço</button>
+    <div id="botoes-acoes" style="display: none; margin-top: 20px;">
+      <button onclick="mostrarTela('acompanhar')" title="Visualize o andamento do serviço contratado">Ir para Acompanhar Serviços</button>
     </div>
+  </div>
+</div>
 
-    <!-- Disponibilidade de Atendimento -->
+<!-- Disponibilidade de Atendimento -->
 <div class="disponibilidade-content" id="disponibilidade" style="display: none;">
   <h1>Disponibilidade para Atendimento</h1>
 
   <div id="dias-disponiveis-checkboxes">
-  <label>Selecione os dias disponíveis para o parceiro realizar o serviço:</label><br>
-  <label><input type="checkbox" name="dias" value="segunda"> Segunda-feira</label><br>
-  <label><input type="checkbox" name="dias" value="terca"> Terça-feira</label><br>
-  <label><input type="checkbox" name="dias" value="quarta"> Quarta-feira</label><br>
-  <label><input type="checkbox" name="dias" value="quinta"> Quinta-feira</label><br>
-  <label><input type="checkbox" name="dias" value="sexta"> Sexta-feira</label><br>
-  <label><input type="checkbox" name="dias" value="sabado"> Sábado</label><br>
-  <label><input type="checkbox" name="dias" value="domingo"> Domingo</label>
-</div>
+    <label>Selecione os dias disponíveis para o parceiro realizar o serviço:</label><br>
+    <label><input type="checkbox" name="dias" value="segunda"> Segunda-feira</label><br>
+    <label><input type="checkbox" name="dias" value="terca"> Terça-feira</label><br>
+    <label><input type="checkbox" name="dias" value="quarta"> Quarta-feira</label><br>
+    <label><input type="checkbox" name="dias" value="quinta"> Quinta-feira</label><br>
+    <label><input type="checkbox" name="dias" value="sexta"> Sexta-feira</label><br>
+    <label><input type="checkbox" name="dias" value="sabado"> Sábado</label><br>
+    <label><input type="checkbox" name="dias" value="domingo"> Domingo</label>
+  </div>
 
   <label for="hora-inicio">Horário de início:</label>
   <input type="time" id="hora-inicio">
@@ -529,8 +700,41 @@ body {
   <label for="hora-fim">Horário de término:</label>
   <input type="time" id="hora-fim">
 
-  <button onclick="confirmarDisponibilidade()">Confirmar Disponibilidade</button>
+  <button onclick="confirmarDisponibilidade()" title="Confirme os dias e horários disponíveis">Confirmar Disponibilidade</button>
 </div>
+
+<!-- Tela Aguardando Orçamento -->
+<div class="aguardando-content" id="aguardando" style="display: none; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    text-align: center; 
+    padding: 30px;">
+  <h1>Orçamento em Análise</h1>
+  <p>Estamos analisando sua solicitação e em até <strong>3 dias úteis</strong> você receberá o orçamento.</p>
+  <p>Você será notificado assim que o orçamento estiver pronto para pagamento.</p>
+  <div id="aguardando-loading" style="margin-top: 30px;">
+    <p>Aguarde...</p>
+    <div class="loader" style="margin: 0 auto;"></div>
+  </div>
+</div>
+
+<!-- Estilo do loader -->
+<style>
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 
 <!-- Tela de Pagamento -->
 <div class="pagamento-content" id="pagamento" style="display: none; flex-direction: column; align-items: center; padding: 30px;">
@@ -576,7 +780,7 @@ body {
   </div>
 
   <!-- Botão de pagamento -->
-  <button class="btn-aceitar" onclick="processarPagamento()">Pagar</button>
+  <button class="btn-aceitar" onclick="processarPagamento()" title="Finalize o pagamento do serviço">Pagar</button>
 
   <p id="mensagem-pagamento" style="display:none; color: green; font-weight: bold; margin-top: 20px;">
     Pagamento realizado com sucesso!
@@ -625,31 +829,29 @@ body {
     </ul>
   </div>
 
-  <!-- Botão para abrir a tela de cancelamento -->
-  <button onclick="mostrarTelaCancelamento()" style="background-color: #002b5b; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 30px;">
+  <!-- Botão para abrir a tela de suporte -->
+  <button onclick="mostrarTelaCancelamento()" title="Clique aqui para conversar com o suporte"
+  style="background-color: #002b5b; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 30px;">
     Dúvidas ou Problemas? Clique Aqui
   </button>
 
   <!-- Botão para redirecionar para a tela de avaliação -->
-  <button onclick="mostrarTelaAvaliacao()" style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
-    Avaliar o Serviço
+  <button onclick="mostrarTelaAvaliacao()" title="Deixe sua avaliação sobre o serviço prestado"
+  style="background-color: #28a745; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px;">
+    Avaliar o Serviço 
   </button>
 </div>
 
-<!-- Tela de Cancelamento (oculta inicialmente) -->
-<div id="cancelamento-content" style="display: none; padding: 30px; background-color: #f2f2f2; border-radius: 10px; max-width: 600px; margin: 20px auto; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-  <h2 style="margin-bottom: 20px;">Contate o Suporte</h2>
+<!-- Tela de Suporte (oculta inicialmente) -->
+<div id="cancelamento-content" class="suporte-content">
+  <h2>Contate o Suporte</h2>
 
   <p><strong>Profissional:</strong> João da Silva</p>
   <p><strong>Serviço:</strong> Pintura do apartamento completo</p>
 
-  <!-- Container para alinhar título e campos -->
-  <div style="width: 100%; max-width: 500px; margin: 0 auto; text-align: left;">
-    <label for="motivo-cancelamento" style="font-weight: bold; display: block; margin-top: 20px;">
-      Escolha o motivo do contato:
-    </label>
-
-    <select id="motivo-cancelamento" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 100%; margin-top: 10px;">
+  <div class="form-container">
+    <label for="motivo-cancelamento">Escolha o motivo do contato:</label>
+    <select id="motivo-cancelamento">
       <option value="">Selecione</option>
       <option value="problemas_pessoais">O profissional não compareceu</option>
       <option value="problema_com_profissional">O serviço está atrasado</option>
@@ -659,12 +861,10 @@ body {
       <option value="outro">Outro (descrever abaixo)</option>
     </select>
 
-    <textarea id="mensagem-suporte" rows="4" placeholder="Deixe uma mensagem para o suporte..." style="width: 100%; padding: 10px; margin-top: 20px; border-radius: 8px; border: 1px solid #ccc; resize: vertical;"></textarea>
+    <textarea id="mensagem-suporte" rows="4" placeholder="Deixe uma mensagem para o suporte..."></textarea>
   </div>
 
-  <button onclick="enviarCancelamento()" style="background-color: #002b5b; color: white; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; margin-top: 20px; font-weight: bold;">
-    Enviar Mensagem
-  </button>
+  <button onclick="enviarCancelamento()">Enviar Mensagem</button>
 </div>
 
 <!-- Tela de Avaliação (oculta inicialmente) -->
@@ -726,7 +926,8 @@ body {
   <label for="comentario">Comentário:</label>
   <textarea id="comentario" rows="4" placeholder="Deixe seu feedback..."></textarea>
 
-  <button id="btnAvaliacao" onclick="enviarAvaliacao()">Enviar Avaliação</button>
+  <button id="btnAvaliacao" title="Enviar Avaliação"
+  onclick="enviarAvaliacao()">Enviar Avaliação</button>
 <p id="avalia-msg" style="display: none; color: #006400; margin-top: 15px; font-weight: bold;">
   Avaliação enviada!
 </p>
@@ -736,7 +937,7 @@ body {
 <div class="hist-servicos-content" id="hist-servicos" style="display: none; flex-direction: column; gap: 20px;">
   <h2>Histórico de Serviços</h2>
 
-  <div class="pagamento-item">
+  <div title="Avalie este serviço" class="pagamento-item">
     <p><strong>Serviço:</strong> Pintura Residencial</p>
     <p><strong>Profissional:</strong> João da Silva</p>
     <p><strong>Data do Pagamento:</strong> 10/05/2025</p>
@@ -749,7 +950,7 @@ body {
     </button>
   </div>
 
-  <div class="pagamento-item">
+  <div title="Avalie este serviço" class="pagamento-item">
     <p><strong>Serviço:</strong> Encanamento</p>
     <p><strong>Profissional:</strong> Maria Oliveira</p>
     <p><strong>Data do Pagamento:</strong> 02/04/2025</p>
@@ -772,6 +973,17 @@ body {
   <p><strong>Número de Serviços Prestados:</strong> 8</p>
   <p><strong>Telefone:</strong> (11) 2991-2266</p>
   <p><strong>Email:</strong> novariviera.imobiliaria@email.com</p>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard-content" id="dashboard" style="display: none;">
+  <div class="dashboard-inner">
+    <div class="text">
+      <h1>Dashboard</h1>
+      <p>Veja abaixo o seu painel com dados resumidos.</p>
+    </div>
+    <img src="Dash Cliente.png" alt="Dashboard" class="img-dashboard">
+  </div>
 </div>
 
 <!-- Configurações Gerais -->
@@ -810,239 +1022,151 @@ body {
   <button onclick="salvarConfiguracoes()">Salvar Configurações</button>
 </div>
 </div>
-  <script>
-    function mostrarTela(tela) {
-  const telas = ['inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 'configuracoes', 'pagamento', 'disponibilidade', 'hist-servicos'];
-  telas.forEach(id => {
-    const elemento = document.getElementById(id);
-    if (elemento) {
-      elemento.classList.remove('active');
-      elemento.style.display = 'none';
+<script>
+  window.onload = () => {
+    mostrarTela("inicio");
+  };
+
+  function mostrarTela(tela) {
+    const telas = [
+      'inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil',
+      'configuracoes', 'pagamento', 'disponibilidade', 'hist-servicos',
+      'cancelamento-content', 'aguardando', 'dashboard'
+    ];
+
+    telas.forEach(id => {
+      const elemento = document.getElementById(id);
+      if (elemento) elemento.style.display = 'none';
+    });
+
+    const ativa = document.getElementById(tela);
+    if (ativa) ativa.style.display = 'flex';
+  }
+
+  function enviarSolicitacao() {
+    const tipoServico = document.getElementById("tipo-servico").value;
+    const descricao = document.getElementById("descricao").value.trim();
+
+    if (!tipoServico || !descricao) {
+      alert("Por favor, preencha o tipo de serviço e a descrição.");
+      return;
     }
-  });
-  const atual = document.getElementById(tela);
-  if (atual) {
-    atual.classList.add('active');
-    atual.style.display = 'flex';
-  }
-}
 
-    function enviarSolicitacao() {
-  // Valida os campos antes de avançar (opcional)
-  const tipoServico = document.getElementById("tipo-servico").value;
-  const descricao = document.getElementById("descricao").value.trim();
-
-  if (!tipoServico || !descricao) {
-    alert("Por favor, preencha o tipo de serviço e a descrição.");
-    return;
+    mostrarTela("disponibilidade");
   }
 
-  // Vai para a tela de disponibilidade
-  document.getElementById("buscar").style.display = "none";
-  document.getElementById("disponibilidade").style.display = "flex";
-}
+  function confirmarDisponibilidade() {
+    const checkboxes = document.querySelectorAll('input[name="dias"]:checked');
+    const diasSelecionados = Array.from(checkboxes).map(cb => cb.value);
+    const inicio = document.getElementById("hora-inicio").value;
+    const fim = document.getElementById("hora-fim").value;
 
+    if (diasSelecionados.length === 0 || !inicio || !fim) {
+      alert("Por favor, selecione ao menos um dia e os horários.");
+      return;
+    }
+
+    mostrarTela("aguardando");
+
+    setTimeout(() => {
+      mostrarTela("pagamento");
+    }, 7000); // 7 segundos simulando os "3 dias"
+  }
+
+  function mostrarFormularioPagamento() {
+    const metodo = document.getElementById("metodo-pagamento").value;
+    document.getElementById("form-cartao").style.display = metodo === "cartao" ? "block" : "none";
+    document.getElementById("form-pix").style.display = metodo === "pix" ? "block" : "none";
+  }
+
+  function processarPagamento() {
+    document.getElementById('mensagem-pagamento').style.display = 'block';
+
+    setTimeout(() => {
+      mostrarTela('acompanhar');
+      document.getElementById('mensagem-pagamento').style.display = 'none';
+    }, 3000);
+  }
 
   function aceitarServico() {
-    // Aqui você pode adicionar lógica para confirmar a aceitação
-    alert("Serviço aceito! Você será redirecionado para Acompanhar Serviços.");
-    document.getElementById('botoes-acoes').style.display = 'block';
+    alert("Serviço aceito com João da Silva!");
+    document.getElementById('info-profissional').style.display = 'none';
+    mostrarTela('pagamento');
   }
 
-function mostrarTela(tela) {
-  const telas = [
-    'inicio', 'buscar', 'acompanhar', 'chat', 'avaliar', 'perfil', 
-    'configuracoes', 'pagamento', 'disponibilidade', 'hist-servicos'
-  ];
+  function enviarMensagem() {
+    const input = document.getElementById("mensagem");
+    const texto = input.value.trim();
+    const chatBox = document.getElementById("chat-box");
 
-  telas.forEach(id => {
-    const elemento = document.getElementById(id);
-    if (elemento) {
-      // Remove qualquer estilo de exibição das outras telas
-      elemento.style.display = 'none';
+    if (texto !== "") {
+      const novaMsg = document.createElement("div");
+      novaMsg.className = "mensagem cliente";
+      novaMsg.textContent = texto;
+      chatBox.appendChild(novaMsg);
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
     }
-  });
-
-  const ativa = document.getElementById(tela);
-  if (ativa) {
-    // Exibe a tela solicitada
-    ativa.style.display = 'flex';
-  }
-}
-
-    function aceitarServico() {
-      alert("Serviço aceito com João da Silva!");
-      document.getElementById("botoes-acoes").style.display = "block";
-    }
-
-    function enviarMensagem() {
-      const input = document.getElementById("mensagem");
-      const texto = input.value.trim();
-      const chatBox = document.getElementById("chat-box");
-      function enviarAvaliacao() {
-  const estrelas = document.getElementById("estrelas").value;
-  const comentario = document.getElementById("comentario").value.trim();
-
-  if (!estrelas || !comentario) {
-    alert("Por favor, selecione uma nota e escreva um comentário.");
-    return;
   }
 
-  alert("Avaliação enviada com sucesso!");
-  document.getElementById("estrelas").value = "";
-  document.getElementById("comentario").value = "";
-}
+  function mostrarTelaAvaliacao() {
+    mostrarTela('avaliar');
+  }
 
-      if (texto !== "") {
-        const novaMsg = document.createElement("div");
-        novaMsg.className = "mensagem cliente";
-        novaMsg.textContent = texto;
-        chatBox.appendChild(novaMsg);
-        input.value = "";
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
+  function enviarAvaliacao() {
+    const nota = document.getElementById('estrelas').value;
+    const comentario = document.getElementById('comentario').value.trim();
+    const msg = document.getElementById('avalia-msg');
+    const btn = document.getElementById('btnAvaliacao');
+
+    if (!nota || !comentario) {
+      alert("Por favor, selecione uma nota e escreva um comentário.");
+      return;
     }
 
-    window.onload = () => {
-      mostrarTela("inicio");
-    };
-    function enviarAvaliacao() {
-  const estrelas = document.getElementById("estrelas").value;
-  const comentario = document.getElementById("comentario").value.trim();
-  const msg = document.getElementById("avalia-msg");
-  const btn = document.getElementById("btnAvaliacao");  // Captura o botão "Enviar Avaliação"
-
-  if (!estrelas || !comentario) {
-    alert("Por favor, selecione uma nota e escreva um comentário.");
-    return;
+    msg.style.display = 'block';
+    btn.disabled = true;
+    document.getElementById('estrelas').value = "";
+    document.getElementById('comentario').value = "";
   }
 
-  // Exibe a mensagem de avaliação enviada
-  msg.style.display = "block";
+  function salvarConfiguracoes() {
+    const termos = document.getElementById('termos').checked;
 
-  // Desabilita o botão para não permitir o envio novamente
-  btn.disabled = true;
+    if (!termos) {
+      alert('Você precisa concordar com os Termos de Uso e Políticas para continuar.');
+      return;
+    }
 
-  // Limpa o formulário de avaliação
-  document.getElementById("estrelas").value = "";
-  document.getElementById("comentario").value = "";
-}
-function salvarConfiguracoes() {
-  const termos = document.getElementById('termos').checked;
-
-  if (!termos) {
-    alert('Você precisa concordar com os Termos de Uso e Políticas para continuar.');
-    return;
+    alert('Configurações salvas com sucesso!');
   }
 
-  // Se chegou aqui, está tudo ok
-  alert('Configurações salvas com sucesso!');
-}
-function aceitarServico() {
-  document.getElementById('info-profissional').style.display = 'none';
-  mostrarTela('pagamento');
-}
-
-function processarPagamento() {
-  // Simulação do pagamento
-  document.getElementById('mensagem-pagamento').style.display = 'block';
-
-  // Opcional: ir para acompanhamento após alguns segundos
-  setTimeout(() => {
-    mostrarTela('acompanhar');
-    document.getElementById('mensagem-pagamento').style.display = 'none';
-  }, 3000);
-}
-
-function mostrarTela(tela) {
-  const seções = document.querySelectorAll('.inicio-content, .buscar-content, .acompanhar-content, .chat-content, .avaliar-content, .perfil-content, .configuracoes-content, .pagamento-content');
-  seções.forEach(secao => secao.style.display = 'none');
-
-  const ativa = document.getElementById(tela);
-  if (ativa) ativa.style.display = 'flex';
-}
-// Função para exibir a tela de cancelamento
-function mostrarTelaCancelamento() {
-  // Oculta a tela atual (Acompanhar Serviços)
-  document.getElementById('acompanhar').style.display = 'none';
-
-  // Exibe a tela de cancelamento
-  document.getElementById('cancelamento-content').style.display = 'block';
-}
-
-// Função para enviar o cancelamento (aqui você pode incluir o envio de dados para um servidor ou outra lógica)
-function enviarCancelamento() {
-  const motivo = document.getElementById('motivo-cancelamento').value;
-  const mensagem = document.getElementById('mensagem-suporte').value;
-
-  if (!motivo) {
-    alert("Por favor, selecione um motivo para o cancelamento.");
-    return;
+  function mostrarTelaCancelamento() {
+    mostrarTela('cancelamento-content');
   }
 
-  // Aqui você pode adicionar lógica para salvar ou enviar os dados do cancelamento
-  console.log("Cancelamento enviado com motivo:", motivo);
-  console.log("Mensagem para suporte:", mensagem);
+  function enviarCancelamento() {
+    const motivo = document.getElementById('motivo-cancelamento').value;
+    const mensagem = document.getElementById('mensagem-suporte').value;
 
-  // Redirecionar ou mostrar uma mensagem de sucesso
-  alert("Cancelamento enviado com sucesso! O suporte entrará em contato.");
-  
-  // Voltar para a tela inicial ou outra tela
-  document.getElementById('cancelamento-content').style.display = 'none';
-  document.getElementById('inicio').style.display = 'block';  // Exemplo, volte para a tela inicial ou outra desejada
-}
-function confirmarSaida() {
+    if (!motivo) {
+      alert("Por favor, selecione um motivo para o cancelamento.");
+      return;
+    }
+
+    console.log("Cancelamento enviado com motivo:", motivo);
+    console.log("Mensagem para suporte:", mensagem);
+
+    alert("Cancelamento enviado com sucesso! O suporte entrará em contato.");
+    mostrarTela("inicio");
+  }
+
+  function confirmarSaida() {
     const confirmacao = confirm("Tem certeza que deseja sair?");
     if (confirmacao) {
-      // Redireciona para a tela de login ou página inicial
-      window.location.href = "index.html"; // Altere para o destino desejado
+      window.location.href = "index.html"; // Altere conforme necessário
     }
   }
-function mostrarFormularioPagamento() {
-  const metodo = document.getElementById("metodo-pagamento").value;
-  document.getElementById("form-cartao").style.display = metodo === "cartao" ? "block" : "none";
-  document.getElementById("form-pix").style.display = metodo === "pix" ? "block" : "none";
-}
-
-function confirmarDisponibilidade() {
-  const checkboxes = document.querySelectorAll('input[name="dias"]:checked');
-  const diasSelecionados = Array.from(checkboxes).map(cb => cb.value);
-  const inicio = document.getElementById("hora-inicio").value;
-  const fim = document.getElementById("hora-fim").value;
-
-  if (diasSelecionados.length === 0 || !inicio || !fim) {
-    alert("Por favor, selecione ao menos um dia e os horários.");
-    return;
-  }
-
-  console.log("Dias:", diasSelecionados);
-  console.log("Horário:", inicio + " - " + fim);
-
-  // Aqui você pode esconder essa tela e mostrar a próxima (ex: pagamento)
-  document.getElementById("disponibilidade").style.display = "none";
-  mostrarTela("pagamento");
-}
-// Função para mostrar a tela de avaliação
-function mostrarTelaAvaliacao() {
-  // Esconde a tela de acompanhamento
-  document.getElementById('acompanhar').style.display = 'none';
-
-  // Mostra a tela de avaliação
-  document.getElementById('avaliar').style.display = 'flex'; // usando flex para alinhamento conforme seu CSS
-}
-
-// Função para enviar a avaliação
-function enviarAvaliacao() {
-  const nota = document.getElementById('estrelas').value;
-  const comentario = document.getElementById('comentario').value;
-
-  if (nota && comentario) {
-    // Aqui você pode enviar os dados para o servidor ou processar de acordo com sua necessidade
-    document.getElementById('avalia-msg').style.display = 'block'; // Exibe a mensagem de sucesso
-  } else {
-    alert("Por favor, preencha a nota e o comentário.");
-  }
-}
-  </script>
+</script>
 </body>
 </html>

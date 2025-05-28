@@ -156,6 +156,78 @@
   padding: 20px;
   text-align: center;
 }
+#inicio {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px;
+}
+
+/* Cards de atalhos */
+.card-interativo {
+  flex: 1;
+  min-width: 200px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card-conteudo {
+  background: #002b5b;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: background 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  color: white;
+}
+
+.card-conteudo h3,
+.card-conteudo p {
+  color: white;
+}
+
+.card-conteudo:hover {
+  background: #ff6600;
+}
+
+.card-conteudo:hover h3,
+.card-conteudo:hover p {
+  color: white;
+}
+
+/* Container e estilo dos cards do resumo */
+.resumo-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.resumo-card {
+  flex: 1;
+  min-width: 200px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.resumo-card strong {
+  color: #002b5b;
+  font-size: 1.1rem;
+}
+
+.resumo-card p {
+  font-size: 1.5rem;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Cores */
+.verde { color: #28a745; }
+.laranja { color: #ff6600; }
+.azul { color: #007bff; }
   </style>
 </head>
 <body>
@@ -164,28 +236,64 @@
       <img src="logo_clickobra_1 fundo branco.png" alt="Logo ClickObra" />
     </div>
     <h2>Parceiro</h2>
-    <a href="#" onclick="mostrarTela('inicio')">Início</a>
-    <a href="#" onclick="mostrarTela('servicos-disponiveis')">Serviços Disponíveis</a>
-    <a href="#" onclick="mostrarTela('servicos')">Serviços</a>
-    <a href="#" onclick="mostrarTela('chat')">Chat</a>
-    <a href="#" onclick="mostrarTela('perfil')">Meu Perfil</a>
-    <a href="#" onclick="mostrarTela('financeiro')">Financeiro</a>
-    <a href="#" onclick="mostrarTela('configuracoes')">Configurações Gerais</a>
-    <a href="#" onclick="confirmarSaida()">Sair</a>
+    <a href="#" onclick="mostrarTela('inicio')" title="Voltar para a página inicial">Início</a>
+<a href="#" onclick="mostrarTela('servicos-disponiveis')" title="Visualizar serviços disponíveis para sua área">Serviços Disponíveis</a>
+<a href="#" onclick="mostrarTela('servicos')" title="Acompanhar seus serviços aceitos">Serviços</a>
+<a href="#" onclick="mostrarTela('chat')" title="Converse com a imobiliária">Chat</a>
+<a href="#" onclick="mostrarTela('perfil')" title="Visualizar seu perfil profissional">Meu Perfil</a>
+<a href="#" onclick="mostrarTela('financeiro')" title="Acompanhar seus ganhos e repasses">Financeiro</a>
+<a href="#" onclick="mostrarTela('dashboard')" title="Painel com resumo das suas atividades">Dashboard</a>
+<a href="#" onclick="mostrarTela('configuracoes')" title="Gerenciar preferências da sua conta">Configurações Gerais</a>
+<a href="#" onclick="confirmarSaida()" title="Sair do seu perfil">Sair</a>
   </div>
 
 <!-- Início -->
-<div id="inicio" class="tela ativo">
-<div style="padding: 20px; text-align: center;">
-  <h1 style="color: #002b5b;">Bem-vindo de volta, João!</h1>
-  <p style="font-size: 1.2rem; color: #555;">Confira abaixo o seu painel de controle com os dados atualizados.</p>
-
-  <div style="margin-top: 30px;">
-    <img src="Dash Parceiro (1).png" alt="Dashboard" 
-     style="display: block; margin: 30px auto; max-width: 90%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" />
-
+<div id="inicio" class="tela ativo" style="padding: 40px; max-width: 1000px; margin: 0 auto; margin-left: 240px;">
+  <!-- Saudação -->
+  <div style="margin-bottom: 40px;">
+    <h1 style="font-size: 2.5rem; color: #002b5b;">Bem-vindo de volta, João 👷‍♂️</h1>
+    <p style="font-size: 1.1rem; color: #666;">Acompanhe suas atividades e continue crescendo com o ClickObra.</p>
   </div>
-</div>
+
+  <!-- Atalhos rápidos -->
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px;">
+    <div class="card-interativo">
+      <div class="card-conteudo">
+        <h3>Meus Serviços</h3>
+        <p>Veja e gerencie os serviços ativos</p>
+      </div>
+    </div>
+
+    <div class="card-interativo">
+      <div class="card-conteudo">
+        <h3>Pagamentos</h3>
+        <p>Consulte seu saldo e datas de pagamento</p>
+      </div>
+    </div>
+
+    <div class="card-interativo">
+      <div class="card-conteudo">
+        <h3>Meu Perfil</h3>
+        <p>Edite seus dados e preferências</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resumo Rápido -->
+  <div class="resumo-container">
+    <div class="resumo-card">
+      <strong>Serviços Concluídos</strong>
+      <p class="verde">58</p>
+    </div>
+    <div class="resumo-card">
+      <strong>Serviços Pendentes</strong>
+      <p class="laranja">2</p>
+    </div>
+    <div class="resumo-card">
+      <strong>Próximo Pagamento</strong>
+      <p class="azul">R$ 1.200,00</p>
+    </div>
+  </div>
 </div>
 
   <!-- Serviços -->
@@ -211,9 +319,11 @@
       Qual sua contraproposta sobre o valor e a data de entrega?
     </p>
     
-    <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
-    <input type="date" class="input-prazo" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
-    <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+    <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" title="Coloque aqui o valor da sua contraproposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+    <input type="date" class="input-prazo" title="Coloque aqui o dia para entrega"
+    style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
+    <button class="btn-enviar-proposta" title="Enviar Contraproposta" 
+    style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
       Enviar
     </button>
   </div>
@@ -238,7 +348,8 @@
     
     <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
     <input type="date" class="input-prazo" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" /><br><br>
-    <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+    <button class="btn-enviar-proposta" title="Enviar Contraproposta"
+    style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
       Enviar
     </button>
   </div>
@@ -255,8 +366,10 @@
         <button class="btn-aceitar">Aceitar Serviço</button>
         <button class="btn-contraproposta">Fazer Contraproposta</button>
 <div class="contraproposta-form" style="display:none; margin-top:10px;">
-  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" />
-  <button class="btn-enviar-proposta" style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
+  <input type="number" placeholder="Digite sua proposta (R$)" class="input-proposta" 
+  title="Coloque aqui o valor da sua contraproposta" style="padding: 5px; width: 60%; border-radius: 4px; border: 1px solid #ccc;" />
+  <button class="btn-enviar-proposta" title="Enviar Contraproposta"
+  style="background-color: #ff6600; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Enviar</button>
 </div>
       </div>
     </div>
@@ -285,7 +398,8 @@
     <div id="perfil" class="tela">
       <h1>Meu Perfil</h1>
       <div style="display: flex; gap: 20px; align-items: center;">
-        <img src="Foto José.jpeg" alt="João da Silva" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #002b5b;">
+        <img src="Foto José.jpeg" alt="João da Silva" title="Sua foto de perfil"
+        style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #002b5b;">
         <div>
           <h2>João da Silva</h2>
           <p><strong>Especialidade:</strong> Pintor</p>
@@ -376,6 +490,19 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" class="tela">
+  <div style="padding: 20px; text-align: center;">
+    <h1 style="color: #002b5b;">Dashboard</h1>
+    <p style="font-size: 1.2rem; color: #555;">Veja abaixo o seu painel com dados resumidos.</p>
+
+    <div style="margin-top: 30px;">
+      <img src="Dash Parceiro (1).png" alt="Dashboard" 
+        style="display: block; margin: 30px auto; max-width: 80%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" />
+    </div>
+  </div>
 </div>
 
 <!-- Configurações Gerais -->
