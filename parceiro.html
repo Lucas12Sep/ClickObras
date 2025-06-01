@@ -256,28 +256,28 @@
   </div>
 
   <!-- Atalhos rápidos -->
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px;">
-    <div class="card-interativo">
-      <div class="card-conteudo">
-        <h3>Meus Serviços</h3>
-        <p>Veja e gerencie os serviços ativos</p>
-      </div>
-    </div>
-
-    <div class="card-interativo">
-      <div class="card-conteudo">
-        <h3>Pagamentos</h3>
-        <p>Consulte seu saldo e datas de pagamento</p>
-      </div>
-    </div>
-
-    <div class="card-interativo">
-      <div class="card-conteudo">
-        <h3>Meu Perfil</h3>
-        <p>Edite seus dados e preferências</p>
-      </div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px;">
+  <div class="card-interativo" onclick="mostrarTela('servicos-disponiveis')">
+    <div class="card-conteudo">
+      <h3>Meus Serviços</h3>
+      <p>Veja e gerencie os serviços ativos</p>
     </div>
   </div>
+
+  <div class="card-interativo" onclick="mostrarTela('financeiro')">
+    <div class="card-conteudo">
+      <h3>Pagamentos</h3>
+      <p>Consulte seu saldo e datas de pagamento</p>
+    </div>
+  </div>
+
+  <div class="card-interativo" onclick="mostrarTela('perfil')">
+    <div class="card-conteudo">
+      <h3>Meu Perfil</h3>
+      <p>Edite seus dados e preferências</p>
+    </div>
+  </div>
+</div>
 
   <!-- Resumo Rápido -->
   <div class="resumo-container">
@@ -294,6 +294,9 @@
       <p class="azul">R$ 1.200,00</p>
     </div>
   </div>
+  <div style="width: 100%; text-align: center; margin-top: 60px; color: #555; font-size: 0.9rem;">
+  © 2025 ClickObra - Todos os direitos reservados.
+</div>
 </div>
 
   <!-- Serviços -->
